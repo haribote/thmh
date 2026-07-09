@@ -3,3 +3,4 @@ dist/
 catalog.json
 *.log
 .DS_Store
+.superpowers/
