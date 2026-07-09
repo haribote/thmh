@@ -16,7 +16,7 @@ The catalog UI is served at `/__thmh/`; repositories with no host app, such as s
 
 ## The name
 
-*Tehon-Mihon* is two Japanese words that both end in 本 (*hon*) — origin, source.
+*Tehon-Mihon* is two Japanese words that both end in 本 (*hon*) — a book, and the original a thing is copied from.
 
 **手本** (てほん, [tehoɴ]) is a model to copy: the sheet of calligraphy a student sets beside their own paper and reproduces stroke for stroke.
 This is what an agent needs — the exact shape of a component, its props and its variants, ready to be followed.
@@ -24,4 +24,4 @@ This is what an agent needs — the exact shape of a component, its props and it
 **見本** (みほん, [mihoɴ]) is a sample to look at: the swatch, the specimen, the one you examine before you choose.
 This is what a person needs — the component rendered, every variant on screen.
 
-Same components, one manifest, two ways of reading it.
+From one manifest, two books are born at once.
