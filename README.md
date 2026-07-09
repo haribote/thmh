@@ -11,3 +11,15 @@ Everything it knows is written to `catalog.json`, the single source of truth fro
 
 That MCP server exposes tools such as `search_components` and `get_component_detail`, letting coding agents find and reuse the components you already have instead of inventing near-duplicates.
 The catalog UI is served at `/__thmh/`; repositories with no host app, such as standalone design systems, can use the `thmh` CLI instead.
+
+## The name
+
+*Tehon-Mihon* is two Japanese words that both end in 本 (*hon*) — origin, source.
+
+**手本** (てほん, [tehoɴ]) is a model to copy: the sheet of calligraphy a student sets beside their own paper and reproduces stroke for stroke.
+This is what an agent needs — the exact shape of a component, its props and its variants, ready to be followed.
+
+**見本** (みほん, [mihoɴ]) is a sample to look at: the swatch, the specimen, the one you examine before you choose.
+This is what a person needs — the component rendered, every variant on screen.
+
+Same components, one manifest, two ways of reading it.
