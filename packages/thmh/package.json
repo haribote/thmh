@@ -1,0 +1,23 @@
+{
+  "name": "thmh",
+  "version": "0.0.0",
+  "type": "module",
+  "bin": {
+    "thmh": "./dist/cli.js"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup src/cli.ts --format esm",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@thmh/core": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "tsup": "^8.5.0",
+    "typescript": "~6.0.3"
+  }
+}
