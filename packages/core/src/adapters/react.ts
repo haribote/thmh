@@ -22,7 +22,9 @@ export function extractReactProps(
   const paramSymbol = signature.getParameters()[0];
   if (!paramSymbol) return { description, props: [] };
 
-  const paramDeclaration = paramSymbol.getValueDeclarationOrThrow();
+  const paramDeclaration = paramSymbol.getValueDeclaration();
+  if (!paramDeclaration) return { description, props: [] };
+
   const paramType = checker.getTypeOfSymbolAtLocation(
     paramSymbol,
     paramDeclaration,

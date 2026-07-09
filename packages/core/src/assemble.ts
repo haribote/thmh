@@ -29,24 +29,29 @@ export function assembleComponents(
   const checker = sourceFile.getProject().getTypeChecker();
   const filePath = toRelativePosixPath(root, sourceFile.getFilePath());
 
-  const components = candidates.map((candidate) => {
-    const { description, props: declaredProps } = extractReactProps(
-      candidate,
-      checker,
-    );
-    const matchedCall = findAssociatedCvaCall(candidate, candidates, calls);
-    const props = mergeProps(declaredProps, matchedCall?.doc);
+  const components: ComponentDoc[] = [];
+  for (const candidate of candidates) {
+    try {
+      const { description, props: declaredProps } = extractReactProps(
+        candidate,
+        checker,
+      );
+      const matchedCall = findAssociatedCvaCall(candidate, candidates, calls);
+      const props = mergeProps(declaredProps, matchedCall?.doc);
 
-    const componentDoc: ComponentDoc = {
-      id: `${filePath}#${candidate.name}`,
-      name: candidate.name,
-      filePath,
-      description,
-      props,
-      cva: matchedCall?.doc,
-    };
-    return componentDoc;
-  });
+      components.push({
+        id: `${filePath}#${candidate.name}`,
+        name: candidate.name,
+        filePath,
+        description,
+        props,
+        cva: matchedCall?.doc,
+      });
+    } catch (error) {
+      const message = error instanceof Error ? error.message : String(error);
+      warnings.push(`${filePath}#${candidate.name}: ${message}`);
+    }
+  }
 
   return { components, warnings };
 }
