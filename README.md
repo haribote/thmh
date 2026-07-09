@@ -25,3 +25,34 @@ This is what an agent needs — the exact shape of a component, its props and it
 This is what a person needs — the component rendered, every variant on screen.
 
 From one manifest, two books are born at once.
+
+## Getting Started
+
+**Prerequisites:** Node.js 24+ and pnpm 11 (see `packageManager` in `package.json`).
+
+```bash
+git clone <this repo> && cd thmh
+pnpm install
+pnpm build
+pnpm dev:example
+```
+
+`dev:example` builds every package, then starts the Vite dev server for `examples/react-app`. Open:
+
+- `http://localhost:5173/` — the example app itself
+- `http://localhost:5173/__thmh/` — the catalog, with every variant of the example `Button` rendered
+- `http://localhost:5173/__thmh/api/catalog.json` — the same data as a manifest
+
+Edit `examples/react-app/src/components/ui/button.tsx` and save — the catalog re-analyzes and refreshes within a couple of seconds, no restart needed.
+
+To generate a manifest without a dev server, run the CLI against a built app:
+
+```bash
+node packages/thmh/dist/cli.js build --root examples/react-app --out catalog.json
+```
+
+To run the test suite:
+
+```bash
+pnpm test
+```

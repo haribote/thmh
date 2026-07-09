@@ -33,3 +33,36 @@ AI にとっての UI 実装ガイドラインとしての **手本**。
 人が見て理解するためのサンプルを並べます。
 
 一つのマニフェストから二冊の本が同時に生まれます。
+
+## 動かしてみる
+
+前提として、Node.js 24 以上と pnpm 11 が必要です(バージョンは `package.json` の `packageManager` に従います)。
+
+```bash
+git clone <このリポジトリ> && cd thmh
+pnpm install
+pnpm build
+pnpm dev:example
+```
+
+`dev:example` は各パッケージをビルドしたうえで、`examples/react-app` の Vite dev サーバーを起動します。
+起動したら、次の URL を開いてください。
+
+- `http://localhost:5173/`: サンプルアプリ本体です。
+- `http://localhost:5173/__thmh/`: カタログです。サンプルの `Button` が、バリアントごとにすべてレンダリングされた状態で並びます。
+- `http://localhost:5173/__thmh/api/catalog.json`: 同じ情報をマニフェストとして取得できます。
+
+`examples/react-app/src/components/ui/button.tsx` を編集して保存すると、数秒でカタログが再解析され、画面が自動的に更新されます。
+dev サーバーの再起動は不要です。
+
+dev サーバーを立てずにマニフェストだけを生成したい場合は、ビルド済みのアプリに対して CLI を実行してください。
+
+```bash
+node packages/thmh/dist/cli.js build --root examples/react-app --out catalog.json
+```
+
+テストは次のコマンドで実行できます。
+
+```bash
+pnpm test
+```
