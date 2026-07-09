@@ -26,7 +26,9 @@ This is what a person needs — the component rendered, every variant on screen.
 
 From one manifest, two books are born at once.
 
-## Getting Started
+## Getting Started (Prototype)
+
+This section walks through the current prototype. The `thmh` CLI only implements `build`; `dev`, `init`, and `mcp` print a "not implemented" message for now.
 
 **Prerequisites:** Node.js 24+ and pnpm 11 (see `packageManager` in `package.json`).
 
