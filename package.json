@@ -1,0 +1,18 @@
+{
+  "name": "thmh-monorepo",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@11.10.0",
+  "scripts": {
+    "build": "pnpm --filter './packages/*' run build",
+    "test": "pnpm -r run test",
+    "typecheck": "pnpm -r run typecheck",
+    "dev:example": "pnpm --filter './packages/*' run build && pnpm --filter react-app run dev",
+    "check": "biome check .",
+    "format": "biome format --write ."
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^2.0.0",
+    "typescript": "~6.0.3"
+  }
+}
