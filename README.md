@@ -1,5 +1,7 @@
 # Tehon-Mihon (thmh)
 
+[English](README.md) | [日本語](README.ja.md)
+
 Story-less UI component catalog for the AI era — auto-generated from your code, served by a Vite plugin, exposed to agents via MCP
 
 ## Overview
