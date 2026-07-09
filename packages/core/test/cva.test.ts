@@ -144,6 +144,25 @@ describe("extractCvaCalls", () => {
     expect(warnings[0]).toContain("unsupported node in cva variants");
   });
 
+  it("skips a shorthand-property variants config but collects a warning", () => {
+    const project = createProject();
+    const sourceFile = project.createSourceFile(
+      "shorthand-variants.ts",
+      `
+      import { cva } from "class-variance-authority";
+      const variants = { tone: { info: "tone-info" } };
+      const badge = cva("badge-base", { variants });
+      `,
+    );
+
+    const { calls, warnings } = extractCvaCalls(sourceFile);
+
+    expect(calls).toHaveLength(1);
+    expect(calls[0]?.doc.variants).toEqual({});
+    expect(warnings).toHaveLength(1);
+    expect(warnings[0]).toContain("unsupported node in cva variants");
+  });
+
   it("ignores a cva import from another package", () => {
     const project = createProject();
     const sourceFile = project.createSourceFile(

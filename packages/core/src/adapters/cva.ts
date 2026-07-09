@@ -84,7 +84,12 @@ function extractCvaCall(
         `${filePath}: unsupported node in cva config: ${configArg.getKindName()}`,
       );
     } else {
-      const variantsInitializer = getPropertyInitializer(configArg, "variants");
+      const variantsInitializer = getPropertyInitializer(
+        configArg,
+        "variants",
+        filePath,
+        warnings,
+      );
       if (variantsInitializer) {
         variants = evaluateVariants(variantsInitializer, filePath, warnings);
       }
@@ -92,6 +97,8 @@ function extractCvaCall(
       const defaultVariantsInitializer = getPropertyInitializer(
         configArg,
         "defaultVariants",
+        filePath,
+        warnings,
       );
       if (defaultVariantsInitializer) {
         defaultVariants = evaluateScalarRecord(
@@ -105,6 +112,8 @@ function extractCvaCall(
       const compoundVariantsInitializer = getPropertyInitializer(
         configArg,
         "compoundVariants",
+        filePath,
+        warnings,
       );
       if (compoundVariantsInitializer) {
         compoundVariants = evaluateCompoundVariants(
@@ -140,10 +149,18 @@ function resolveAssignmentTarget(
 function getPropertyInitializer(
   objectLiteral: Node,
   name: string,
+  filePath: string,
+  warnings: string[],
 ): Node | undefined {
   if (!Node.isObjectLiteralExpression(objectLiteral)) return undefined;
   const property = objectLiteral.getProperty(name);
-  if (!property || !Node.isPropertyAssignment(property)) return undefined;
+  if (!property) return undefined;
+  if (!Node.isPropertyAssignment(property)) {
+    warnings.push(
+      `${filePath}: unsupported node in cva ${name}: ${property.getKindName()}`,
+    );
+    return undefined;
+  }
   return property.getInitializer();
 }
 

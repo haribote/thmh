@@ -69,6 +69,10 @@ function isUnderNodeModules(declaration: Node): boolean {
   return declaration.getSourceFile().getFilePath().includes("node_modules");
 }
 
+// Naive "all declarations in node_modules" filtering fails because
+// VariantProps<typeof x> mapped props resolve back to PropertyAssignments in
+// the local variants object literal. This also knowingly drops props
+// declared via local mapped/utility types.
 function hasLocalTypeMemberDeclaration(declarations: Node[]): boolean {
   return declarations.some(
     (declaration) =>

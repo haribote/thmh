@@ -2,8 +2,7 @@ export const PREVIEW_ENTRY_ID = "virtual:thmh/preview-entry";
 export const RESOLVED_PREVIEW_ENTRY_ID = `\0${PREVIEW_ENTRY_ID}`;
 
 export function generatePreviewEntryCode(cssPath: string): string {
-  return `import ${JSON.stringify(cssPath)};
-import React from "react";
+  return `import React from "react";
 import { createRoot } from "react-dom/client";
 
 function renderError(message) {
@@ -12,6 +11,21 @@ function renderError(message) {
     root.textContent = message;
   }
 }
+
+function renderHint(message) {
+  const root = document.getElementById("root");
+  if (root) {
+    const hint = document.createElement("div");
+    hint.textContent = message;
+    root.appendChild(hint);
+  }
+}
+
+const cssPath = ${JSON.stringify(cssPath)};
+let cssFailed = false;
+const cssLoad = import(/* @vite-ignore */ cssPath).catch(() => {
+  cssFailed = true;
+});
 
 try {
   const params = new URLSearchParams(location.search);
@@ -34,6 +48,13 @@ try {
   }
 } catch (error) {
   renderError(\`thmh: \${error instanceof Error ? error.message : String(error)}\`);
+}
+
+await cssLoad;
+if (cssFailed) {
+  renderHint(
+    \`thmh: failed to load css "\${cssPath}" — set the css option of thmh()\`,
+  );
 }
 `;
 }
