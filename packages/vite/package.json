@@ -2,6 +2,14 @@
   "name": "@thmh/vite",
   "version": "0.0.0",
   "type": "module",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/haribote/thmh.git",
+    "directory": "packages/vite"
+  },
+  "homepage": "https://github.com/haribote/thmh#readme",
+  "bugs": "https://github.com/haribote/thmh/issues",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
