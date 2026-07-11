@@ -28,7 +28,7 @@
     "@thmh/core": "workspace:*"
   },
   "devDependencies": {
-    "@types/node": "^24.0.0",
+    "@types/node": "^26.1.0",
     "tsup": "^8.5.0",
     "typescript": "~6.0.3"
   }
