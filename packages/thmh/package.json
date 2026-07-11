@@ -10,6 +10,9 @@
   },
   "homepage": "https://github.com/haribote/thmh#readme",
   "bugs": "https://github.com/haribote/thmh/issues",
+  "engines": {
+    "node": ">=24"
+  },
   "bin": {
     "thmh": "./dist/cli.js"
   },
