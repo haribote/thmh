@@ -21,6 +21,11 @@ updates:
       prefix-development: chore(deps-dev)
     cooldown:
       default-days: 7
+    ignore:
+      # @types/node の major は Node のランタイムに合わせて人手で上げる
+      - dependency-name: "@types/node"
+        update-types:
+          - version-update:semver-major
     groups:
       production-dependencies:
         dependency-type: production
