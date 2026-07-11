@@ -1,0 +1,52 @@
+name: Publish
+
+on:
+  release:
+    types: [published]
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    environment: npm-publish
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: ${{ github.event.release.tag_name }}
+
+      - uses: pnpm/action-setup@v6
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          cache: pnpm
+
+      - name: Resolve version and dist-tag
+        env:
+          TAG_NAME: ${{ github.event.release.tag_name }}
+        run: |
+          version="${TAG_NAME#v}"
+          for manifest in packages/*/package.json; do
+            declared="$(jq -r .version "$manifest")"
+            if [ "$declared" != "$version" ]; then
+              echo "::error file=$manifest::version is $declared but the release tag is $TAG_NAME"
+              exit 1
+            fi
+          done
+          case "$version" in
+            *-*) dist_tag=next ;;
+            *) dist_tag=latest ;;
+          esac
+          echo "DIST_TAG=$dist_tag" >> "$GITHUB_ENV"
+          echo "Publishing $version to the $dist_tag tag"
+
+      - run: pnpm install --frozen-lockfile
+
+      - run: pnpm build
+
+      - run: pnpm test
+
+      - run: pnpm publish -r --provenance --access public --tag "$DIST_TAG" --no-git-checks
