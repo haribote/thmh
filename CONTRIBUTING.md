@@ -5,8 +5,8 @@
 A PR that adds `preinstall`, `install`, or `postinstall` to any `packages/*/package.json` is rejected by default.
 Two reasons deserve stating:
 
-1. **Runtime execution.** These scripts execute on the consumer's machine at install time, running arbitrary code from this repository.
-2. **Silent failure under `--ignore-scripts`.** Consumers can disable script execution with `npm install --ignore-scripts`, so any functionality placed in lifecycle scripts is simply broken for those users. Code run at install time should not be a default entry point for functionality.
+1. **Code execution on the consumer's machine.** These scripts run at install time, in the environment of whoever installs the package.
+2. **Breakage under `--ignore-scripts`.** Consumers can install with `npm install --ignore-scripts`, which skips these scripts entirely, so any functionality placed in them is broken for those users.
 
 None of the three packages today has such a script. This policy records the status quo rather than introducing a new constraint.
 
