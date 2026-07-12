@@ -4,7 +4,7 @@
 
 If you discover a security vulnerability, please report it privately via the "Report a vulnerability" button in the [Security tab](https://github.com/haribote/thmh/security/advisories) of this repository. This uses GitHub Security Advisories to keep the report confidential.
 
-**Do not file security issues as public GitHub issues.** Public issues can alert potential bad actors to vulnerabilities before patches are available.
+**Do not file security issues as public GitHub issues.** A public issue discloses the vulnerability before a fix is available.
 
 ## Supported Versions
 
@@ -12,26 +12,20 @@ This is a pre-1.0 prototype. Only the latest published version receives security
 
 ## Supply Chain
 
-thmh publishes three npm packages: `@thmh/core`, `@thmh/vite`, and `@thmh/cli`. You can verify the following about our supply chain:
+thmh publishes three npm packages: `@thmh/core`, `@thmh/vite`, and `@thmh/cli`. The following facts about how they reach npm are verifiable from this repository and from the registry.
 
-**Publishing via GitHub Actions and npm Trusted Publishing**
+**Trusted Publishing**
 
-Each release runs through GitHub Actions without any long-lived npm authentication tokens. We use [npm Trusted Publishing](https://docs.npmjs.com/using-npm/scopes#trusting-a-build-pipeline) with OpenID Connect (OIDC) to exchange GitHub's identity for temporary npm credentials. You can inspect our [publish workflow](https://github.com/haribote/thmh/blob/main/.github/workflows/publish.yml) to confirm this.
+Releases are published from GitHub Actions using [npm Trusted Publishing](https://docs.npmjs.com/trusted-publishers), which exchanges the workflow's OpenID Connect (OIDC) identity for a short-lived npm credential. No long-lived npm token exists, either on a maintainer's machine or in GitHub Secrets. You can inspect the [publish workflow](https://github.com/haribote/thmh/blob/main/.github/workflows/publish.yml) to confirm this.
 
-**Provenance Attestations**
+**Provenance attestations**
 
-Each published package includes a cryptographic attestation of where and how it was built. You can verify this:
-
-```bash
-npm view @thmh/core --json | jq '.versions | .latest | .dist'
-```
-
-The `"attestation"` field, if present, confirms the package was published by our automated workflow.
-
-**No Install-Time Scripts**
-
-None of our three packages runs code during installation. Each `package.json` contains only build-time scripts (`build`, `typecheck`, `test`), and explicitly omits lifecycle scripts like `preinstall`, `install`, or `postinstall`. This means you can safely install our packages with:
+Releases published through that workflow carry a provenance attestation linking the package on npm back to the commit and workflow run that built it. Check any version with:
 
 ```bash
-npm install --ignore-scripts
+npm view @thmh/core@<version> --json | jq '.dist.attestations'
 ```
+
+**No install-time scripts**
+
+None of the three packages declares an install-time lifecycle script (`preinstall`, `install`, or `postinstall`), so none of them runs code on your machine at install time. They install correctly under `npm install --ignore-scripts`.
