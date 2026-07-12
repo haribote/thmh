@@ -26,6 +26,28 @@ This is what a person needs — the component rendered, every variant on screen.
 
 From one manifest, two books are born at once.
 
+## Packages
+
+- **`@thmh/core`** — the static analysis engine. Reads your components' types and variant definitions and produces `catalog.json`; the other two packages depend on it.
+- **`@thmh/vite`** — the Vite plugin. Add it to `vite.config.ts` to serve the catalog at `/__thmh/` inside your app's own dev server.
+- **`@thmh/cli`** — the standalone CLI for repositories with no host app, such as a dedicated design system repo. The package is scoped as `@thmh/cli`, but the command it installs is still `thmh` (see #6).
+
+## Installing from npm
+
+If your app already has a Vite dev server:
+
+```bash
+npm install -D @thmh/vite@next
+```
+
+For a repository with no host app:
+
+```bash
+npm install -D @thmh/cli@next
+```
+
+The `@next` tag is required for now — each package's first-ever publish also set `latest` to a placeholder `0.0.0` reserved ahead of any real release, and that placeholder won't be superseded until a stable version ships.
+
 ## Getting Started (Prototype)
 
 This section walks through the current prototype. The `thmh` CLI only implements `build`; `dev`, `init`, and `mcp` print a "not implemented" message for now.
