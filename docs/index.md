@@ -8,6 +8,10 @@ See [CONTRIBUTING.md](../CONTRIBUTING.md) for how these documents are structured
 
 - [Requirements](requirements.md) — what thmh builds (What) and why (Why).
 
+## Development
+
+- [Test-Driven Development (t-wada style)](tdd.md) — the TDD cycle and rules this project follows.
+
 ## Feature domains
 
 - [analysis](analysis/index.md) — component discovery and prop/variant/token extraction.

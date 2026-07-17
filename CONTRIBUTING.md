@@ -71,7 +71,7 @@ These are project laws. They apply to every contributor, human or agent.
 
 ### t-wada style TDD
 
-Development follows classic (t_wada / Kent Beck) TDD: **Red → Green → Refactor**. Write a failing test first (Red), make it pass with the simplest code (Green), then remove duplication and improve the design (Refactor). Keep a test list and work one test at a time in small steps, using fake-it, triangulation, and obvious-implementation as each situation warrants. Tests run on the existing vitest setup; add fixture-based tests under `packages/*/test/`.
+Development follows the classic, strict TDD cycle (**Red → Green → Refactor**), one test at a time. The full procedure — the cycle, the non-negotiable rules, and the test commands — is documented in [docs/tdd.md](docs/tdd.md). Follow it whenever you write production code.
 
 ## Lifecycle Scripts
 

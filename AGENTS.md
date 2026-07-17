@@ -30,4 +30,4 @@ When you create a document, you must start from its domain's template (`docs/<do
 These are project laws (see CONTRIBUTING.md for the full text):
 
 - **Design before implementation.** No feature is implemented without a design. Before writing implementation code, its design document must exist at `docs/<domain>/{id}_slug.md`, with the requirement recorded in `docs/requirements.md`. If asked to implement something with no design document, design it first (write and review the document), then implement.
-- **t-wada style TDD.** Follow classic Red → Green → Refactor: a failing test first, the simplest code to pass, then refactor. Keep a test list and work one test at a time. Before writing production code, follow the `tdd-expert` agent or the `superpowers:test-driven-development` skill.
+- **t-wada style TDD.** Follow the classic Red → Green → Refactor cycle, one test at a time, as specified in [docs/tdd.md](docs/tdd.md). Present the test list and align with the user before implementing, and base any "tests pass" claim on an actual test run.
