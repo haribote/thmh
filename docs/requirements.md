@@ -39,6 +39,7 @@ The full long-term vision is in scope. Each capability is tagged with the releas
 - Three interfaces derived from the manifest: a human catalog UI _(Prototype)_, an agent-facing MCP server _(Beta onward)_, and CI checks _(GA)_.
 - A pluggable adapter architecture — Framework, Variant (style), and Token adapters — so support extends beyond React and cva over time. _(Beta onward)_
 - Story-less override definitions (`defineCatalog`) for context, decorators, mock props, and interactions that static analysis cannot infer. _(GA)_
+- Support for React meta-frameworks without a Vite host, starting with Next.js: analysis and client-component preview via the standalone path. _(GA; React Server Components preview is Future)_
 - A publishing ecosystem for library authors: bundling `catalog.json` in npm packages, a lightweight remote read-only MCP, and prebuilt manifests for external libraries. _(Future)_
 - Rendering and verification: screenshots, visual regression, and interaction tests. _(Future)_
 
@@ -71,9 +72,9 @@ Exit criteria: React + cva analysis runs on top of the adapter interface, and th
 
 ### General availability (shadcn/ui, override definitions, breaking-change detection)
 
-Capabilities: `defineCatalog` override definitions (decorators, mock props, variant overrides) that let context-dependent and Radix-composed components render; a hardened React adapter (`forwardRef`, `Slot`/`asChild`, non-cva styled components); optional shadcn `registry.json` interop; CI structural diff and breaking-change detection; and the `add_variant` MCP tool.
+Capabilities: `defineCatalog` override definitions (decorators, mock props, variant overrides) that let context-dependent and Radix-composed components render; a hardened React adapter (`forwardRef`, `Slot`/`asChild`, non-cva styled components); optional shadcn `registry.json` interop; CI structural diff and breaking-change detection; the `add_variant` MCP tool; and Next.js support — cataloging Next.js projects through the standalone path with client-component and `next/*` primitive preview (RSC preview deferred to Future).
 
-Exit criteria: shadcn/ui components, including Radix-composed ones, render in the catalog without hand-written Stories; breaking changes to props are caught in CI before merge; agents can add and verify variant overrides through MCP without direct file access.
+Exit criteria: shadcn/ui components, including Radix-composed ones, render in the catalog without hand-written Stories; a Next.js project's client components render in the catalog without a Vite host; breaking changes to props are caught in CI before merge; agents can add and verify variant overrides through MCP without direct file access.
 
 ### Future (framework/style pluggability, rendering verification, public ecosystem)
 
@@ -141,6 +142,7 @@ Requirements are grouped by capability domain and tagged with the phase in which
 - Analyze through the stable ts-morph (TS 6.0) API, compatible with consumer projects on TypeScript 7. _(Prototype)_
 - Detect cva and Tailwind automatically for common setups, with explicit registration available. _(Beta)_
 - Interoperate with shadcn `registry.json`. _(GA, optional)_
+- Catalog Next.js projects without a Vite host (via the standalone path), previewing client components (`'use client'`) and common `next/*` primitives. _(GA; RSC preview deferred)_
 - Discover bundled `catalog.json` from installed npm packages and merge them. _(Future)_
 
 ### ui
@@ -163,7 +165,7 @@ Requirements are grouped by capability domain and tagged with the phase in which
 
 - **TypeScript is required for analysis.** Resolving types such as `ComponentProps<typeof Button>` needs the TypeScript type checker, not syntactic parsing alone. Analysis uses ts-morph on the stable TS 6.0 API, which coexists with consumer projects built on TypeScript 7; the adapter boundary lets the analysis API be swapped later.
 - **React-first for now.** The prototype and near-term releases target React components using cva. Other frameworks are in scope only as the Future multi-adapter architecture.
-- **Vite-plugin-first distribution.** The primary entry point is a Vite plugin that inherits the host app's configuration; a standalone CLI is the fallback for repositories with no host app, such as design-system libraries.
+- **Vite-plugin-first distribution.** The primary entry point is a Vite plugin that inherits the host app's configuration; a standalone CLI is the fallback for repositories with no Vite host — design-system libraries, and React meta-frameworks such as Next.js that use their own build system (targeted for GA).
 - **cva + Tailwind near-term.** The near-term style stack is cva for variants and Tailwind for tokens; other systems come via adapters later.
 - **Node.js 24+** across all packages.
 - **Agent-agnostic.** No capability is tied to a single coding agent; agent-facing guidance lives in `AGENTS.md` and public docs.
@@ -175,6 +177,7 @@ Requirements are grouped by capability domain and tagged with the phase in which
 - What is the exact interaction-test API shape, and should it track Storybook's `play` contract for easy migration or take an independent path?
 - How deep should the Tailwind token dependency graph go before the added depth stops paying off?
 - What is the scope of shadcn `registry.json` interop — ingesting shadcn components, emitting thmh manifests, or both — and how do the two schemas evolve if they diverge?
+- How should Next.js React Server Components be previewed, if at all — is client-only preview sufficient, or is an RSC-capable renderer needed, and in which phase?
 
 ## References
 
