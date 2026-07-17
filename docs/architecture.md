@@ -26,55 +26,85 @@ flowchart TB
   M --> I["Interface — UI / CLI / MCP(target)"]
 ```
 
-### Analysis
+- **Analysis** — statically parses TypeScript sources to enumerate components and their variants. Framework and variant adapters do the extraction; the pass is framework-independent.
+- **Manifest** — the single source of truth: the `Catalog` schema, built in memory and either served (dev) or written to disk (build).
+- **Rendering** — currently client-side React-in-iframe preview; no Playwright yet (_target_).
+- **Interface** — how humans and tools reach the manifest: the dev-server UI and API, the CLI's static output, and the (_target_) MCP server and CI checks.
 
-Statically parses TypeScript sources to enumerate components and their variants. `discover.ts` finds exported PascalCase declarations that have call signatures. `adapters/react.ts` extracts each prop (name, type, required, default, description) and the component's JSDoc description via the ts-morph type checker, dropping members declared only in `node_modules`. `adapters/cva.ts` parses `cva()` calls into base, variants, default variants, and compound variants. `assemble.ts` ties these together per file, and `index.ts` (`analyzeProject`) drives the whole pass and returns a `Catalog` (default include: `src/**/*.tsx`).
+The modules realizing each layer are shown in the package layout below.
 
-### Manifest
+## Package layout
 
-The single source of truth, defined in `packages/core/src/types.ts`. `Catalog` holds `schemaVersion`, `generator`, `generatedAt`, `components`, and `warnings`. Each `ComponentDoc` (id `filePath#Name`) carries its props and any `cva` metadata; `PropDoc` records whether a prop is `declared` or synthesized from cva (`source: "cva"`). `matrix.ts` derives variant axes and their Cartesian product for the variant matrix. The manifest is built in memory and either served (dev) or written to disk (build).
+Three packages, each mapping to layers. Every file's responsibility is annotated.
 
-### Rendering
+`@thmh/core` — Analysis + Manifest (framework- and host-independent):
 
-Currently client-side React-in-iframe; it does not use Playwright yet (_target_). `preview.ts` generates a virtual entry that reads `file`/`export`/`props` from the query string, dynamically imports the component, and renders it with React DOM. `client/ui.ts` is a vanilla-DOM page that renders the variant matrix as a grid of preview iframes plus a props table.
+```text
+packages/core/src/
+├─ index.ts        # analyzeProject(): entry point; drives a full analysis pass
+├─ project.ts      # sets up the ts-morph Project and loads source files
+├─ discover.ts     # finds component candidates (exported, PascalCase, callable)
+├─ assemble.ts     # per file: runs the adapters and assembles ComponentDoc entries
+├─ adapters/
+│  ├─ react.ts     # Framework adapter: extracts props and JSDoc
+│  └─ cva.ts       # Variant adapter: extracts cva() variant definitions
+├─ matrix.ts       # derives variant axes and their Cartesian product
+└─ types.ts        # the manifest schema (Catalog, ComponentDoc, PropDoc, CvaDoc)
+```
 
-### Interface
+`@thmh/vite` — Rendering + Interface (dev):
 
-How humans and tools reach the manifest. `packages/vite/src/index.ts` is a `serve`-only Vite plugin that watches `.ts`/`.tsx` files; `analyzer.ts` holds the in-memory `Catalog` and re-runs analysis on change (a 300 ms debounced full re-analysis today; true file-level incremental is a _target_). `middleware.ts` serves `/__thmh/` (the UI), `/__thmh/api/catalog.json`, `/__thmh/api/events` (SSE live reload), and `/__thmh/preview`. `packages/thmh/src/cli.ts` provides `thmh build`. The agent-facing MCP server and CI checks are _target_.
+```text
+packages/vite/src/
+├─ index.ts        # the serve-only Vite plugin; wires the watcher, analyzer, middleware
+├─ analyzer.ts     # holds the in-memory Catalog; debounced re-analysis on change
+├─ middleware.ts   # serves /__thmh/ UI, catalog.json, SSE events, and preview
+├─ preview.ts      # virtual entry that renders one component in an iframe
+└─ client/
+   └─ ui.ts        # the vanilla-DOM catalog page (variant matrix + props table)
+```
 
-## Packages and dependencies
+`@thmh/cli` — the CLI (the package is named `@thmh/cli` but installs the `thmh` bin):
+
+```text
+packages/thmh/src/
+└─ cli.ts          # the `thmh` command (today: build only)
+```
+
+## Dependencies
 
 ```mermaid
 flowchart LR
   vite["@thmh/vite"] --> core["@thmh/core"]
   cli["@thmh/cli"] --> core
+  core --> tsmorph["ts-morph"]
+  core --> glob["tinyglobby"]
+  vite -. peer .-> vitepkg["vite"]
 ```
 
-- **`@thmh/core`** — the Analysis and Manifest layers. Framework-independent; depends on `ts-morph` and `tinyglobby`. Entry point `analyzeProject`.
-- **`@thmh/vite`** — the Vite plugin (Rendering and Interface for dev): middleware, catalog UI, preview, and dev-time analysis. Depends on `@thmh/core`; `vite` is a peer dependency.
-- **`@thmh/cli`** — the `thmh` command (the package lives in `packages/thmh` and is named `@thmh/cli`, but the installed bin is `thmh`). Today only `build` is implemented. Depends on `@thmh/core`.
+`@thmh/core` is the foundation: it depends only on `ts-morph` and `tinyglobby`, and nothing depends inward on `@thmh/vite` or the CLI. This keeps analysis independent of any host or dev server, so the CLI can generate a manifest without Vite and the plugin can embed the same analysis in a running dev server.
 
 ## Data flow
 
-**Dev-time.** A watched `.ts`/`.tsx` file changes → `analyzer` invalidates and, after a 300 ms debounce, re-runs `analyzeProject` → the in-memory `Catalog` updates → an SSE `catalog-updated` event reaches the UI → the UI refetches `/__thmh/api/catalog.json` and re-renders → each cell loads `/__thmh/preview?file=…&export=…&props=…`, which imports and renders the component.
+**Dev-time.** A watched `.ts`/`.tsx` file changes → the analyzer invalidates and, after a 300 ms debounce, re-runs a full analysis → the in-memory `Catalog` updates → an SSE `catalog-updated` event reaches the UI → the UI refetches `catalog.json` and re-renders → each cell loads the preview route, which imports and renders the component.
 
-**Build-time.** `thmh build` runs `analyzeProject` once (no watcher) and writes `catalog.json`.
+**Build-time.** `thmh build` runs the analysis once (no watcher) and writes `catalog.json`.
 
 ```mermaid
 flowchart TB
-  change[File change] --> inv["analyzer.invalidate (debounce 300ms)"]
-  inv --> analyze["analyzeProject (ts-morph)"]
+  change[File change] --> inv["analyzer invalidates (debounce 300ms)"]
+  inv --> analyze["full analysis (ts-morph)"]
   analyze --> cat[in-memory Catalog]
   cat --> sse["SSE catalog-updated"]
   sse --> uifetch["UI refetches catalog.json"]
-  uifetch --> iframe["/__thmh/preview renders component"]
-  build["thmh build"] --> analyze2["analyzeProject (once)"]
+  uifetch --> iframe["preview route renders component"]
+  build["thmh build"] --> analyze2["analysis (once)"]
   analyze2 --> file[catalog.json on disk]
 ```
 
 ## Adapters: current wiring and target registry
 
-**Current.** There is no adapter registry. `packages/core/src/assemble.ts` imports the React and cva adapters directly and calls them in sequence: it extracts props with the React adapter, finds an associated `cva()` call by matching `typeof <name>` in the component's first-parameter type (falling back to the sole cva when a file has exactly one component and one cva), and merges the results. `AnalyzeOptions` has no `adapters` field, and there is no Token (Tailwind) adapter.
+**Current.** There is no adapter registry. The analysis pass wires the React and cva adapters directly (in `assemble.ts`): it extracts props with the React adapter, associates a `cva()` call by matching `typeof <name>` in the component's first-parameter type, and merges the results. The manifest schema has no place for design tokens, and there is no Tailwind adapter.
 
 **Target.** A pluggable architecture with three adapter families behind a registry:
 
@@ -88,9 +118,9 @@ First-party adapters are bundled and auto-enabled for common setups (they work o
 
 The structural changes ahead, so the shape of the work is legible. Phasing and acceptance live in the [requirements.md](requirements.md) roadmap.
 
-- **Beta.** Introduce the adapter registry (refactor `assemble.ts` into a dispatcher; add `AnalyzeOptions.adapters` and `thmh()` options). Add the Tailwind **Token** adapter, which adds token fields to `ComponentDoc` and bumps `schemaVersion` (with a published JSON Schema). Add an **MCP server** to the Interface layer at `/__thmh/mcp`, exposing `search_components` and `get_component_detail` over the in-memory `Catalog`. Add `thmh init`.
+- **Beta.** Introduce the adapter registry (turn `assemble.ts` into a dispatcher; add `AnalyzeOptions.adapters` and `thmh()` options). Add the Tailwind **Token** adapter, which adds token fields to the manifest and bumps `schemaVersion` (with a published JSON Schema). Add an **MCP server** to the Interface layer at `/__thmh/mcp`, exposing `search_components` and `get_component_detail` over the in-memory `Catalog`. Add `thmh init`.
 - **GA.** Merge `defineCatalog` overrides in the Analysis/Manifest layers; add CI structural diff; catalog Next.js projects through the standalone path.
-- **Future.** Replace/augment the client iframe Rendering with Playwright (screenshots, visual regression, interaction tests); decouple React and cva from the core so additional Framework/Variant adapters (Vue/Svelte, tailwind-variants/panda) can be added; grow the publish ecosystem.
+- **Future.** Replace or augment the client iframe Rendering with Playwright (screenshots, visual regression, interaction tests); decouple React and cva from the core so additional Framework/Variant adapters (Vue/Svelte, tailwind-variants/panda) can be added; grow the publish ecosystem.
 
 ## Key design decisions
 
