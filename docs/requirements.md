@@ -4,32 +4,70 @@ What thmh builds, and why. This document captures **What** (the capabilities to 
 
 Each requirement should be traceable to one or more feature documents (`docs/<domain>/{ID}_slug.md`). See [CONTRIBUTING.md](../CONTRIBUTING.md) for conventions.
 
-## Product
+## Overview
 
 thmh is a story-less UI component catalog generator. It statically analyzes components to enumerate every variant, serves the result to humans via a Vite plugin, and exposes it to agents via an MCP server — so that neither humans nor agents maintain a hand-written duplicate of a component's truth.
 
-<!-- Fill in the product-level What/Why. Keep How out. -->
+## Background and goals
 
-## analysis
+<!-- TBD -->
 
-<!-- What the analysis domain must produce: discovered components, extracted props, variants, tokens. Why. -->
+## Target users
 
-## manifest
+<!-- TBD -->
 
-<!-- What the manifest (catalog.json) must contain and guarantee. Why a single source of truth. -->
+## Scope
 
-## mcp
+### In scope
 
-<!-- What tools the MCP server must expose and what they must return. Why agents need them. -->
+<!-- TBD -->
 
-## cli
+### Out of scope
 
-<!-- What commands the CLI must provide. Why (repos without a host app, CI). -->
+<!-- TBD -->
 
-## integration
+## Roadmap
 
-<!-- What external ecosystems thmh must interoperate with. Why. -->
+### Prototype
 
-## ui
+<!-- TBD -->
 
-<!-- What the human-facing catalog must show. Why (the "sample to look at" audience). -->
+### Beta
+
+<!-- TBD -->
+
+### General availability
+
+<!-- TBD -->
+
+### Future
+
+<!-- TBD -->
+
+## Glossary
+
+<!-- TBD -->
+
+## Functional requirements
+
+<!-- TBD -->
+
+## Non-functional requirements
+
+<!-- TBD -->
+
+## Constraints and assumptions
+
+<!-- TBD — largely derived from the functional and non-functional requirements. -->
+
+## Acceptance criteria
+
+<!-- TBD — may be folded into Roadmap. -->
+
+## Open questions
+
+<!-- TBD -->
+
+## References
+
+<!-- TBD -->
