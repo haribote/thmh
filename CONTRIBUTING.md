@@ -1,5 +1,116 @@
 # Contributing to thmh
 
+## Documentation
+
+All project documentation lives under `docs/`, and is written in **English**. The entry point is [`docs/index.md`](docs/index.md), a link hub referenced from the README.
+
+### Layout
+
+```
+docs
+├ index.md              # link hub for everything under docs/
+├ requirements.md       # What is built, and Why. No How.
+├ <domain>/
+│ ├ index.md            # list of that domain's feature documents
+│ └ {ID}_slug.md        # a single feature's spec and design
+└ ui/
+  ├ index.md
+  └ {ID}_slug.md        # a screen, layout, component, or off-screen feature
+```
+
+Feature domains are organized by capability: `analysis`, `manifest`, `mcp`, `cli`, `integration`, and `ui`.
+
+- `requirements.md` holds **What** (the capabilities to build) and, as context, **Why**. It never describes How.
+- A feature document (`{ID}_slug.md`) holds that one feature's spec and design — the **How** — and links back to the requirement it satisfies.
+- Each `<domain>/index.md` lists its feature documents. These indexes are maintained by hand for now (a candidate for later automation).
+
+### Feature IDs
+
+A file is named `{feature-id}_{kebab-slug}.md`. The **feature ID** is `{CODE}{NNN}` — the part before the underscore — and is distinct from the slug and the filename. Cross-references (`depends_on` / `used_by`, below) use the feature ID, never the filename.
+
+- **CODE** is a three-letter uppercase code.
+  - By domain: `ANA` (analysis), `MAN` (manifest), `MCP`, `CLI`, `INT` (integration).
+  - The `ui` domain splits by kind: `UIC` (component), `UIL` (layout), `UIP` (page), `UIX` (other — features that never appear on screen, e.g. the catalog BFF connection).
+- **NNN** is a zero-padded three-digit sequence, numbered independently per CODE (each prefix starts at `001`).
+- **slug** is a descriptive kebab-case name.
+
+Examples: `MCP001_search-components.md`, `ANA001_cva-adapter.md`, `UIP001_catalog-page.md`. `index.md` and `requirements.md` are fixed names and carry no feature ID.
+
+The CODE duplicates the directory, but this is deliberate: `MCP001` is a path-independent, stable handle you can cite from other documents or from code.
+
+### Front matter
+
+Every feature and UI document begins with YAML front matter:
+
+```yaml
+---
+id: MCP001
+title: search_components
+depends_on: [MAN001]   # feature IDs this feature depends on
+used_by: [UIP001]      # feature IDs that use this feature
+layer: feature         # optional: foundation | feature | integration
+status: draft          # optional: draft | stable | ...
+---
+```
+
+`depends_on` and `used_by` express the dependency graph between features. Their values are **feature IDs**, not filenames. The two are inverse directions of the same edge, so keep them consistent (a candidate for later automation, like the indexes).
+
+### Feature document template
+
+```markdown
+---
+id: ANA001
+title: cva adapter
+depends_on: []
+used_by: []
+---
+
+# cva adapter
+
+## Overview
+<!-- What this feature is, in one or two sentences. -->
+
+## Requirements
+<!-- Link to the requirement in docs/requirements.md that this satisfies. -->
+
+## Design
+<!-- How it works. -->
+
+## Notes
+<!-- Edge cases, open questions, alternatives considered. -->
+```
+
+### UI document template
+
+```markdown
+---
+id: UIP001
+title: catalog page
+depends_on: []
+used_by: []
+---
+
+# catalog page
+
+## Overview
+## Anatomy
+## Behavior
+## A11y
+## Design
+```
+
+## Development rules
+
+These are project laws. They apply to every contributor, human or agent.
+
+### Design before implementation
+
+**No feature is implemented without a design.** Before writing implementation code for a feature, a design document for it must exist at `docs/<domain>/{id}_slug.md`, with its requirement recorded in `docs/requirements.md`. If you are asked to implement something that has no design document, design it first — write the document and have it reviewed — and only then implement. The documentation is the source of truth, and it precedes the code.
+
+### t-wada style TDD
+
+Development follows classic (t_wada / Kent Beck) TDD: **Red → Green → Refactor**. Write a failing test first (Red), make it pass with the simplest code (Green), then remove duplication and improve the design (Refactor). Keep a test list and work one test at a time in small steps, using fake-it, triangulation, and obvious-implementation as each situation warrants. Tests run on the existing vitest setup; add fixture-based tests under `packages/*/test/`.
+
 ## Lifecycle Scripts
 
 A PR that adds `preinstall`, `install`, or `postinstall` to any `packages/*/package.json` is rejected by default.

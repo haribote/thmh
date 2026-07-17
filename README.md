@@ -14,6 +14,8 @@ Everything it knows is written to `catalog.json`, the single source of truth fro
 That MCP server exposes tools such as `search_components` and `get_component_detail`, letting coding agents find and reuse the components you already have instead of inventing near-duplicates.
 The catalog UI is served at `/__thmh/`; repositories with no host app, such as standalone design systems, can use the `thmh` CLI instead.
 
+Project documentation lives under [`docs/`](docs/index.md) — requirements, per-feature design, and the catalog UI.
+
 ## The name
 
 *Tehon-Mihon* is two Japanese words that both end in 本 (*hon*) — a book, and the original a thing is copied from.
