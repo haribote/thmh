@@ -1,5 +1,78 @@
 # Contributing to thmh
 
+## Documentation
+
+All project documentation lives under `docs/`, and is written in **English**. The entry point is [`docs/index.md`](docs/index.md), a link hub referenced from the README.
+
+### Layout
+
+```
+docs
+├ index.md              # link hub for everything under docs/
+├ requirements.md       # What is built, and Why. No How.
+├ <domain>/
+│ ├ index.md            # list of that domain's feature documents
+│ └ {ID}_slug.md        # a single feature's spec and design
+└ ui/
+  ├ index.md
+  └ {ID}_slug.md        # a screen, layout, component, or off-screen feature
+```
+
+Feature domains are organized by capability: `analysis`, `manifest`, `mcp`, `cli`, `integration`, and `ui`.
+
+- `requirements.md` holds **What** (the capabilities to build) and, as context, **Why**. It never describes How.
+- A feature document (`{ID}_slug.md`) holds that one feature's spec and design — the **How** — and links back to the requirement it satisfies.
+- Each `<domain>/index.md` lists its feature documents. These indexes are maintained by hand for now (a candidate for later automation).
+
+### Feature IDs
+
+A file is named `{feature-id}_{kebab-slug}.md`. The **feature ID** is `{CODE}{NNN}` — the part before the underscore — and is distinct from the slug and the filename. Cross-references (`depends_on` / `used_by`, below) use the feature ID, never the filename.
+
+- **CODE** is a three-letter uppercase code.
+  - By domain: `ANA` (analysis), `MAN` (manifest), `MCP`, `CLI`, `INT` (integration).
+  - The `ui` domain splits by kind: `UIC` (component), `UIL` (layout), `UIP` (page), `UIX` (other — features that never appear on screen, e.g. the catalog BFF connection).
+- **NNN** is a zero-padded three-digit sequence, numbered independently per CODE (each prefix starts at `001`).
+- **slug** is a descriptive kebab-case name.
+
+Examples: `MCP001_search-components.md`, `ANA001_cva-adapter.md`, `UIP001_catalog-page.md`. `index.md` and `requirements.md` are fixed names and carry no feature ID.
+
+The CODE duplicates the directory, but this is deliberate: `MCP001` is a path-independent, stable handle you can cite from other documents or from code.
+
+### Front matter
+
+Every feature and UI document begins with YAML front matter:
+
+```yaml
+---
+id: MCP001
+title: search_components
+depends_on: [MAN001]   # feature IDs this feature depends on
+used_by: [UIP001]      # feature IDs that use this feature
+layer: feature         # optional: foundation | feature | integration
+status: draft          # optional: draft | stable | ...
+---
+```
+
+`depends_on` and `used_by` express the dependency graph between features. Their values are **feature IDs**, not filenames. The two are inverse directions of the same edge, so keep them consistent (a candidate for later automation, like the indexes).
+
+### Templates
+
+Every domain directory holds a `_template.md` with that domain's front matter and section skeleton (`docs/<domain>/_template.md`). **When you create a document, you must start from its domain's `_template.md`** — copy it to `{ID}_slug.md`, assign the feature ID, and fill in the sections. Do not hand-roll a document from scratch.
+
+`_template.md` is not a feature document; it carries no real feature ID and is never listed in a domain's `index.md`.
+
+## Development rules
+
+These are project laws. They apply to every contributor, human or agent.
+
+### Design before implementation
+
+**No feature is implemented without a design.** Before writing implementation code for a feature, a design document for it must exist at `docs/<domain>/{id}_slug.md`, with its requirement recorded in `docs/requirements.md`. If you are asked to implement something that has no design document, design it first — write the document and have it reviewed — and only then implement. The documentation is the source of truth, and it precedes the code.
+
+### t-wada style TDD
+
+Development follows the classic, strict TDD cycle (**Red → Green → Refactor**), one test at a time. The full procedure — the cycle, the non-negotiable rules, and the test commands — is documented in [docs/tdd.md](docs/tdd.md). Follow it whenever you write production code.
+
 ## Lifecycle Scripts
 
 A PR that adds `preinstall`, `install`, or `postinstall` to any `packages/*/package.json` is rejected by default.
