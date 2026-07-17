@@ -66,9 +66,9 @@ Exit criteria: adding the plugin to an existing Vite app in one line renders eve
 
 ### Beta (Vite + React + Tailwind, adapter foundation, agent MCP)
 
-Capabilities: a Framework / Variant / Token adapter interface with a registry, replacing today's hardcoded wiring; a Tailwind adapter that extracts design tokens (v3 config and v4 `@theme`) and builds a component-to-token dependency graph; an MCP server exposing `search_components` and `get_component_detail`; schema stabilization (a versioned `catalog.json` and a published JSON Schema); and `thmh init` for setup and adapter detection.
+Capabilities: a Framework / Variant / Token adapter interface with a registry, replacing today's hardcoded wiring; a Tailwind adapter that extracts design tokens (v3 config and v4 `@theme`) and builds a component-to-token dependency graph; an MCP server exposing `search_components` and `get_component_detail`; schema stabilization (a versioned `catalog.json` and a published JSON Schema); `thmh init` for setup and adapter detection; and an official project website — a landing page and published documentation (a live catalog demo may be published separately).
 
-Exit criteria: React + cva analysis runs on top of the adapter interface, and the Tailwind adapter is added without breaking the manifest contract; agents can query the MCP server and receive valid component metadata; `catalog.json` is versioned so consumers can detect incompatibility; configuration is expressible through `thmh()` options without a second config file.
+Exit criteria: React + cva analysis runs on top of the adapter interface, and the Tailwind adapter is added without breaking the manifest contract; agents can query the MCP server and receive valid component metadata; `catalog.json` is versioned so consumers can detect incompatibility; configuration is expressible through `thmh()` options without a second config file; and the official website (landing and documentation) is published.
 
 ### General availability (shadcn/ui, override definitions, breaking-change detection)
 
