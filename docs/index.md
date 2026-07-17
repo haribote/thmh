@@ -7,6 +7,7 @@ See [CONTRIBUTING.md](../CONTRIBUTING.md) for how these documents are structured
 ## Requirements
 
 - [Requirements](requirements.md) — what thmh builds (What) and why (Why).
+- [Architecture](architecture.md) — how thmh is structured: layers, packages, data flow, and adapters.
 
 ## Development
 
