@@ -35,9 +35,11 @@ flowchart TB
 
 ## Packages
 
-- **`@thmh/core`** — the analysis pipeline and the manifest schema, independent of any framework or host. It discovers components, runs adapters to extract props and variants, and assembles the manifest. Analysis adapters live under an `adapters/` directory, the extension point that today holds the React and cva adapters.
-- **`@thmh/vite`** — the Vite plugin for development. It watches sources, keeps the manifest in memory, and serves the catalog UI, its JSON and SSE API, and component previews under `/__thmh/`.
-- **`@thmh/cli`** — the `thmh` command (the package is named `@thmh/cli` but installs the `thmh` bin). Today it generates a static `catalog.json` via `build`.
+Each package is described by the roles it contains, not by its files — so it answers "what goes where" while surviving renames and splits.
+
+- **`@thmh/core`** — the analysis pipeline and the manifest schema, independent of any framework or host. The pipeline runs in stages: **discovery** (find component candidates), **adapters** (extract props and variants; the `adapters/` directory is the extension point, today holding the React and cva adapters), and **assembly** (combine them into the manifest). Beside them sit the **manifest schema** and the **variant-matrix** derivation. So a new framework, variant, or token adapter goes under `adapters/`; a new manifest field goes in the schema; discovery or assembly changes go in their stage.
+- **`@thmh/vite`** — the Vite plugin for development, made of the **plugin entry** (wires analysis into the dev server), the **analyzer** (holds the in-memory manifest and refreshes it on change), the **HTTP middleware** (the `/__thmh/` routes: UI, `catalog.json`, SSE, preview), and the browser **catalog UI**. A new route goes in the middleware; a UI change goes in the catalog UI.
+- **`@thmh/cli`** — the `thmh` command (the package is named `@thmh/cli` but installs the `thmh` bin); new commands live here. Today it generates a static `catalog.json` via `build`.
 
 ```mermaid
 flowchart LR
