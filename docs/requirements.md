@@ -2,7 +2,7 @@
 
 What thmh builds, and why. This document captures **What** (the capabilities to build) and, as supporting context, **Why** (the rationale). It deliberately omits **How** — design and implementation live in each feature document under the domain directories.
 
-Each requirement should be traceable to one or more feature documents (`docs/<domain>/{ID}_slug.md`). See [index](index.md) for the domain map and [CONTRIBUTING.md](../CONTRIBUTING.md) for conventions.
+Each requirement should be traceable to one or more feature documents (`docs/<domain>/{ID}_slug.md`). See [CONTRIBUTING.md](../CONTRIBUTING.md) for conventions.
 
 ## Product
 
