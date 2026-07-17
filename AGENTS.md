@@ -19,6 +19,7 @@ You are acting as a UX/UI engineer on this project. Bring:
 Project documentation lives under `docs/` (English). Before designing or implementing, read the relevant documents so you work from the project's own source of truth, not from guesses:
 
 - [`docs/requirements.md`](docs/requirements.md) — what thmh builds (What) and why (Why).
+- [`docs/architecture.md`](docs/architecture.md) — how thmh is structured: layers, packages, data flow, and adapters.
 - Domain indexes — the feature documents for each capability: [analysis](docs/analysis/index.md), [manifest](docs/manifest/index.md), [mcp](docs/mcp/index.md), [cli](docs/cli/index.md), [integration](docs/integration/index.md).
 - [`docs/ui/index.md`](docs/ui/index.md) — the human-facing catalog.
 - [`docs/index.md`](docs/index.md) is the hub linking everything.
