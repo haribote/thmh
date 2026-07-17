@@ -23,7 +23,7 @@ Project documentation lives under `docs/` (English). Before designing or impleme
 - [`docs/ui/index.md`](docs/ui/index.md) — the human-facing catalog.
 - [`docs/index.md`](docs/index.md) is the hub linking everything.
 
-See [CONTRIBUTING.md](CONTRIBUTING.md) for the documentation structure, feature-ID scheme, and front matter (`depends_on` / `used_by`).
+When you create a document, you must start from its domain's template (`docs/<domain>/_template.md`) — copy it, assign the feature ID, and fill in the sections. See [CONTRIBUTING.md](CONTRIBUTING.md) for the documentation structure, feature-ID scheme, and front matter (`depends_on` / `used_by`).
 
 ## Rules
 

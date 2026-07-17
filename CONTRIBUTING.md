@@ -55,49 +55,11 @@ status: draft          # optional: draft | stable | ...
 
 `depends_on` and `used_by` express the dependency graph between features. Their values are **feature IDs**, not filenames. The two are inverse directions of the same edge, so keep them consistent (a candidate for later automation, like the indexes).
 
-### Feature document template
+### Templates
 
-```markdown
----
-id: ANA001
-title: cva adapter
-depends_on: []
-used_by: []
----
+Every domain directory holds a `_template.md` with that domain's front matter and section skeleton (`docs/<domain>/_template.md`). **When you create a document, you must start from its domain's `_template.md`** — copy it to `{ID}_slug.md`, assign the feature ID, and fill in the sections. Do not hand-roll a document from scratch.
 
-# cva adapter
-
-## Overview
-<!-- What this feature is, in one or two sentences. -->
-
-## Requirements
-<!-- Link to the requirement in docs/requirements.md that this satisfies. -->
-
-## Design
-<!-- How it works. -->
-
-## Notes
-<!-- Edge cases, open questions, alternatives considered. -->
-```
-
-### UI document template
-
-```markdown
----
-id: UIP001
-title: catalog page
-depends_on: []
-used_by: []
----
-
-# catalog page
-
-## Overview
-## Anatomy
-## Behavior
-## A11y
-## Design
-```
+`_template.md` is not a feature document; it carries no real feature ID and is never listed in a domain's `index.md`.
 
 ## Development rules
 
