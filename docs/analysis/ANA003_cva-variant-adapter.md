@@ -1,7 +1,7 @@
 ---
 id: ANA003
 title: cva variant adapter
-depends_on: []
+depends_on: [MAN001]
 used_by: [ANA004, ANA005]
 layer: feature
 status: stable
