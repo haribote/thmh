@@ -12,6 +12,9 @@ See [CONTRIBUTING.md](../CONTRIBUTING.md) for how these documents are structured
 ## Development
 
 - [Test-Driven Development (t-wada style)](tdd.md) — the TDD cycle and rules this project follows.
+- [Commit messages](commit.md) — the Conventional Commits format for commits and PR titles.
+- [Filing an issue](issue.md) — the bilingual, background/tasks procedure for opening issues.
+- [Handling a pull request](pr.md) — the PR lifecycle from branch through squash merge and cleanup.
 
 ## Feature domains
 
