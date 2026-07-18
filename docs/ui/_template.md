@@ -19,7 +19,7 @@ used_by: []
 
 ## Anatomy
 
-<!-- Structure and parts. -->
+<!-- Structure and parts. Add a mermaid diagram when the shape is the point; see ../design.md. -->
 
 ## Behavior
 

@@ -52,6 +52,10 @@ The five non-UI domains share four sections:
 
 `ui` adds **Anatomy** (structure and parts), **Behavior** (interactions and states), and **A11y** (keyboard focus, semantics, contrast), and narrows **Design** to visual and information hierarchy.
 
+**Diagrams belong in Design, when they carry what prose cannot.** Write one as a fenced `mermaid` block, which GitHub renders in place. A diagram earns its space when the shape is the point and holding it in prose costs the reader real effort: a pipeline of several stages, a decision that falls through in order, an exchange between processes. It does not earn its space by redrawing a list or a table.
+
+The analysis domain shows where the line falls. Only the document describing how the stages combine carries diagrams — one for the pipeline, one for the rule that decides which variant definition belongs to which component. The four documents that each describe a single stage say what they need in a sentence, and a diagram there would restate it rather than add to it.
+
 Writing a design for something already implemented follows the same procedure. Describe what the code does now, and put what it should do instead in Notes.
 
 ## Linking to the requirement

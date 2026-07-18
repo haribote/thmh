@@ -19,7 +19,7 @@ used_by: []
 
 ## Design
 
-<!-- How it works. -->
+<!-- How it works. Add a mermaid diagram when the shape is the point; see ../design.md. -->
 
 ## Notes
 

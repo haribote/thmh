@@ -11,7 +11,7 @@ status: stable
 
 ## Overview
 
-Joins the three extraction stages into one record per component. It runs discovery, asks the adapters what they found, decides which variant definition belongs to which component, and merges the two views of a component's props into one list.
+Joins the extraction stages into one record per component. It runs discovery, asks the adapters what they found, decides which variant definition belongs to which component, and merges the two views of a component's props into one list.
 
 ## Requirements
 
@@ -25,11 +25,35 @@ The input is a source file and the project root; the output is a list of compone
 
 A file with no candidates returns nothing, and no cva extraction runs. Otherwise the cva calls are extracted once for the whole file and reused for every candidate in it.
 
+```mermaid
+flowchart TD
+    F[Source file] --> D["ANA001: discover candidates"]
+    D -->|none| Empty[No components, no warnings]
+    D -->|one or more| C["ANA003: extract every cva call<br/>once for the file"]
+    C --> Loop["Per candidate"]
+    Loop --> P["ANA002: props and description"]
+    P --> A["Associate a cva call"]
+    A --> M["ANA004: derive axes<br/>merge as synthesized props"]
+    M --> Rec[Component record]
+    Loop -.->|throws| W[Warning, next candidate]
+```
+
 **Associating a variant definition with a component.** For each candidate, in order:
 
 1. The first cva call whose local name appears as `typeof <name>` in the text of the candidate's first parameter — either its type node or the source text of its type's declarations.
 2. Failing that, if the file holds exactly one cva call and exactly one candidate, that call.
 3. Failing that, none. The component is recorded with no variant definition.
+
+```mermaid
+flowchart TD
+    S[Candidate] --> Q1{Any cva call in the file?}
+    Q1 -->|no| None[No variant definition]
+    Q1 -->|yes| Q2{"First parameter's type text<br/>contains 'typeof name'?"}
+    Q2 -->|yes| Hit[That call]
+    Q2 -->|no| Q3{"Exactly one cva call<br/>and exactly one candidate?"}
+    Q3 -->|yes| Only[That call]
+    Q3 -->|no| None
+```
 
 **Merging props.** The declared props from [ANA002](ANA002_react-props-adapter.md) come first, in their original order. Each variant axis from [ANA004](ANA004_variant-matrix.md) whose name is not already a declared prop is appended as a synthesized prop:
 
