@@ -26,6 +26,15 @@ Project documentation lives under `docs/` (English). Before designing or impleme
 
 When you create a document, you must start from its domain's template (`docs/<domain>/_template.md`) — copy it, assign the feature ID, and fill in the sections. See [CONTRIBUTING.md](CONTRIBUTING.md) for the documentation structure, feature-ID scheme, and front matter (`depends_on` / `used_by`).
 
+## Workflows
+
+Recurring development tasks have a canonical, agent-agnostic procedure under `docs/`. Follow the matching guide instead of improvising:
+
+- [`docs/tdd.md`](docs/tdd.md) — running the Red → Green → Refactor cycle (also a project law, below).
+- [`docs/commit.md`](docs/commit.md) — writing commit and PR-title subjects in Conventional Commits format.
+- [`docs/issue.md`](docs/issue.md) — filing an issue in the bilingual, background/tasks format.
+- [`docs/pr.md`](docs/pr.md) — handling a pull request from branch through squash merge and cleanup.
+
 ## Rules
 
 These are project laws (see CONTRIBUTING.md for the full text):

@@ -73,6 +73,23 @@ These are project laws. They apply to every contributor, human or agent.
 
 Development follows the classic, strict TDD cycle (**Red → Green → Refactor**), one test at a time. The full procedure — the cycle, the non-negotiable rules, and the test commands — is documented in [docs/tdd.md](docs/tdd.md). Follow it whenever you write production code.
 
+## Issues and pull requests
+
+**Non-English speakers are welcome here.** You do not need fluent English to contribute — write issues and pull requests starting in your native language, and using translation tools to produce the required versions is fine.
+
+Issues and pull requests are multilingual. Write each one starting in the author's native language, and **always include both Japanese and English**. Order the language blocks with the native language first, then Japanese, then English: a Japanese-native author writes Japanese then English (the familiar `English follows Japanese.`), an English-native author writes English then Japanese, and an author whose native language is neither leads with it, then Japanese, then English. Separate the blocks with a `---` rule, open with a line stating the reading order, and mirror every block one-to-one.
+
+- **Issues** use a background/tasks structure (`## 背景` / `## タスク`, mirrored as `## Background` / `## Tasks`). The step-by-step procedure and template are in [docs/issue.md](docs/issue.md).
+- **Pull requests** state what changed and how it was verified (`## 変更内容` / `## 動作確認` / `## 関連`, mirrored in English) and link their issue with `Closes #NN`. The full lifecycle and template are in [docs/pr.md](docs/pr.md).
+
+GitHub pre-fills these skeletons from [`.github/ISSUE_TEMPLATE/`](.github/ISSUE_TEMPLATE) and [`.github/pull_request_template.md`](.github/pull_request_template.md), which are their single source of truth.
+
+Branches are named `type/topic` in kebab-case, where `type` is a Conventional Commits type (e.g. `docs/architecture`, `fix/thmh-cli-package-name`). Cut each branch from the latest `main`.
+
+Pull requests are **squash-merged**: the squashed commit subject is the PR title with the PR number appended (e.g. `docs: write the architecture document (#32)`), and the branch is deleted after the merge lands.
+
+Commit messages and PR titles follow Conventional Commits; the full rules are in [docs/commit.md](docs/commit.md).
+
 ## Lifecycle Scripts
 
 A PR that adds `preinstall`, `install`, or `postinstall` to any `packages/*/package.json` is rejected by default.
