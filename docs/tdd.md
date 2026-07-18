@@ -26,6 +26,7 @@ This project follows the classic, strict TDD cycle advocated by Takuto Wada (t_w
    - Do not mix new behavior or spec changes into this step.
 
 5. **Repeat steps 2–4 until the test list is empty.**
+   - An empty list means every item became a test. From then on the tests are the record — their names are the list.
 
 ## Non-negotiable rules
 
