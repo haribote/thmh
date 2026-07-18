@@ -1,5 +1,5 @@
 ---
-name: commit
+name: thmh-commit
 description: "Use when writing a git commit message or a PR title in this repo — the Conventional Commits format (type(scope): subject). Follow this whenever you are about to commit, the user asks to commit changes, or mentions コミット, commit message, or a PR title, even if they do not name the convention. Follows docs/commit.md."
 ---
 

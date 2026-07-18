@@ -1,5 +1,5 @@
 ---
-name: pr
+name: thmh-pr
 description: "Use when handling a pull request in this repo — creating a branch, writing the PR body, review, squash-merge, or post-merge branch cleanup. Follow this whenever you open or draft a PR, or the user mentions PR を出す, プルリク, squash merge, or branch 削除, even if they do not say 'pull request' explicitly. Follows docs/pr.md."
 ---
 

@@ -1,5 +1,5 @@
 ---
-name: issue
+name: thmh-issue
 description: "Use when filing a GitHub issue in this repo — the multilingual 'English follows Japanese' format with a background/tasks structure. Follow this whenever you open or draft an issue, or the user mentions issue 起票, 課題を立てる, or filing a bug or feature request, even if they do not say 'issue' explicitly. Follows docs/issue.md."
 ---
 
