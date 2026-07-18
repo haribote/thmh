@@ -73,6 +73,18 @@ These are project laws. They apply to every contributor, human or agent.
 
 Development follows the classic, strict TDD cycle (**Red → Green → Refactor**), one test at a time. The full procedure — the cycle, the non-negotiable rules, and the test commands — is documented in [docs/tdd.md](docs/tdd.md). Follow it whenever you write production code.
 
+### Code comments
+
+**Code carries its own intent; comments are not written by default.** A comment that restates what the code already says is a second copy of the truth, and it drifts from the code the same way a hand-maintained prop table drifts from the component. When you reach for a comment to explain what a function does, rename it or split it instead.
+
+Three cases are exempt:
+
+- **`TODO` comments**, marking work deliberately left undone.
+- **The "why", where the code cannot show it.** A workaround for an OS, browser, or toolchain quirk, or a tradeoff that a reader would otherwise mistake for a bug. Two examples in the codebase today: `packages/vite/src/middleware.ts` explains why the preview route goes through `transformIndexHtml`, and `packages/core/src/adapters/react.ts` records which props its filter knowingly drops.
+- **An explicit request** from a maintainer in review.
+
+This applies to comments in source files. Front matter, JSDoc that feeds the catalog's prop descriptions, and documentation under `docs/` are not comments in this sense — extracting JSDoc is a product feature, so write it for the components you expect the analyzer to read.
+
 ## Issues and pull requests
 
 **Non-English speakers are welcome here.** You do not need fluent English to contribute — write issues and pull requests starting in your native language, and using translation tools to produce the required versions is fine.
