@@ -16,6 +16,7 @@ This project ships every change through a pull request, from the branch it is cu
 3. **Open the PR.**
    - Assemble the body from the skeleton in [Template](#template). It always includes both Japanese and English, starting in the author's native language, then Japanese, then English — separate the blocks with a `---` rule and open with a line stating the reading order (e.g. `English follows Japanese.`).
    - Include `Closes #NN` so the PR links and closes its issue.
+   - Where one issue takes several PRs, only the PR that finishes it says `Closes`. The others say `Refs #NN`, because closing an issue whose remaining tasks are unchecked drops that work from tracking.
    - Set the PR title as a Conventional Commits subject; it becomes the squashed commit subject.
 
 4. **Review.**
@@ -38,7 +39,7 @@ The skeleton lives in [`.github/pull_request_template.md`](../.github/pull_reque
 ## Non-negotiable rules
 
 - Any "tests pass" or "checks pass" claim must come from an actually-run command, never from a guess.
-- Always include `Closes #NN` so the PR links and closes its issue.
+- Always link the issue: `Closes #NN` when this PR finishes it, `Refs #NN` when the issue needs further PRs. Never leave a PR with neither.
 - Japanese and English are both required; every language version mirrors one-to-one, and the body starts in the author's native language.
 - Merge with squash, and let the squashed subject be the PR title with `(#N)` appended.
 - Destructive or outward-facing operations — `gh pr merge`, branch deletion, `git push` — require explicit confirmation each time. Never run them unprompted.
