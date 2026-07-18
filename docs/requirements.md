@@ -105,10 +105,11 @@ A requirement that has been designed carries the feature ID of its design docume
 
 ### analysis
 
-- Extract component props, types, and JSDoc from TypeScript sources via the type checker. _(Prototype)_
-- Discover exported PascalCase components with call signatures. _(Prototype)_
-- Analyze cva variant definitions and extract axes, options, defaults, and compound variants. _(Prototype)_
-- Generate the full variant matrix for each component. _(Prototype)_
+- Extract component props, types, and JSDoc from TypeScript sources via the type checker. _(Prototype)_ — ANA002
+- Discover exported PascalCase components with call signatures. _(Prototype)_ — ANA001
+- Analyze cva variant definitions and extract axes, options, defaults, and compound variants. _(Prototype)_ — ANA003
+- Generate the full variant matrix for each component. _(Prototype)_ — ANA004
+- Combine discovery and the adapters' output into one record per component, isolating a failure to the component that caused it. _(Prototype)_ — ANA005
 - Extract Tailwind design tokens (v3 config, v4 `@theme`) and build a component-to-token dependency graph. _(Beta)_
 - Provide a pluggable adapter registry for additional frameworks and style systems. _(Beta; extended in Future)_
 - Collect real usage examples from the host app's Vite module graph. _(Future)_
