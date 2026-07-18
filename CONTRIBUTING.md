@@ -94,7 +94,7 @@ This applies to comments in source files. Front matter, JSDoc that feeds the cat
 Issues and pull requests are multilingual. Write each one starting in the author's native language, and **always include both Japanese and English**. Order the language blocks with the native language first, then Japanese, then English: a Japanese-native author writes Japanese then English (the familiar `English follows Japanese.`), an English-native author writes English then Japanese, and an author whose native language is neither leads with it, then Japanese, then English. Separate the blocks with a `---` rule, open with a line stating the reading order, and mirror every block one-to-one.
 
 - **Issues** use a background/tasks structure (`## 背景` / `## タスク`, mirrored as `## Background` / `## Tasks`). The step-by-step procedure and template are in [docs/issue.md](docs/issue.md).
-- **Pull requests** state what changed and how it was verified (`## 変更内容` / `## 動作確認` / `## 関連`, mirrored in English) and link their issue with `Closes #NN`. The full lifecycle and template are in [docs/pr.md](docs/pr.md).
+- **Pull requests** state what changed and how it was verified (`## 変更内容` / `## 動作確認` / `## 関連`, mirrored in English) and link their issue with `Closes #NN`, or with `Refs #NN` when the issue takes more than one PR. The full lifecycle and template are in [docs/pr.md](docs/pr.md).
 
 GitHub pre-fills these skeletons from [`.github/ISSUE_TEMPLATE/`](.github/ISSUE_TEMPLATE) and [`.github/pull_request_template.md`](.github/pull_request_template.md), which are their single source of truth.
 
