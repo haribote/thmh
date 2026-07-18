@@ -69,6 +69,8 @@ These are project laws. They apply to every contributor, human or agent.
 
 **No feature is implemented without a design.** Before writing implementation code for a feature, a design document for it must exist at `docs/<domain>/{id}_slug.md`, with its requirement recorded in `docs/requirements.md`. If you are asked to implement something that has no design document, design it first — write the document and have it reviewed — and only then implement. The documentation is the source of truth, and it precedes the code.
 
+A design is finished when its test list can be written from it without inventing behavior. The procedure — deciding whether a change needs a new document or an update to an existing one, assigning the feature ID, linking the requirement in both directions, and updating the indexes — is documented in [docs/design.md](docs/design.md).
+
 ### t-wada style TDD
 
 Development follows the classic, strict TDD cycle (**Red → Green → Refactor**), one test at a time. The full procedure — the cycle, the non-negotiable rules, and the test commands — is documented in [docs/tdd.md](docs/tdd.md). Follow it whenever you write production code.

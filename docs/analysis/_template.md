@@ -15,7 +15,7 @@ used_by: []
 
 ## Requirements
 
-<!-- Link to the requirement in ../requirements.md that this satisfies. -->
+<!-- Link to the requirement in ../requirements.md that this satisfies, and quote the bullet. Append this feature's ID to that bullet in requirements.md. See ../design.md. -->
 
 ## Design
 

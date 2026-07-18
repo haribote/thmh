@@ -101,6 +101,8 @@ Exit criteria: adapters for a second framework and a second variant system are c
 
 Requirements are grouped by capability domain and tagged with the phase in which they first land. Detailed design belongs in the corresponding feature documents.
 
+A requirement that has been designed carries the feature ID of its design document at the end of the bullet. A bullet with no ID is a requirement nobody has designed yet. See [design.md](design.md) for the procedure.
+
 ### analysis
 
 - Extract component props, types, and JSDoc from TypeScript sources via the type checker. _(Prototype)_

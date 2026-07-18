@@ -30,6 +30,7 @@ When you create a document, you must start from its domain's template (`docs/<do
 
 Recurring development tasks have a canonical, agent-agnostic procedure under `docs/`. Follow the matching guide instead of improvising:
 
+- [`docs/design.md`](docs/design.md) — writing a feature design document: when one is required, how to write it, and when it is finished (also a project law, below).
 - [`docs/tdd.md`](docs/tdd.md) — running the Red → Green → Refactor cycle (also a project law, below).
 - [`docs/commit.md`](docs/commit.md) — writing commit and PR-title subjects in Conventional Commits format.
 - [`docs/issue.md`](docs/issue.md) — filing an issue in the bilingual, background/tasks format.
@@ -39,6 +40,6 @@ Recurring development tasks have a canonical, agent-agnostic procedure under `do
 
 These are project laws (see CONTRIBUTING.md for the full text):
 
-- **Design before implementation.** No feature is implemented without a design. Before writing implementation code, its design document must exist at `docs/<domain>/{id}_slug.md`, with the requirement recorded in `docs/requirements.md`. If asked to implement something with no design document, design it first (write and review the document), then implement.
+- **Design before implementation.** No feature is implemented without a design. Before writing implementation code, its design document must exist at `docs/<domain>/{id}_slug.md`, with the requirement recorded in `docs/requirements.md`. If asked to implement something with no design document, design it first (write and review the document), then implement. The procedure is in [docs/design.md](docs/design.md); a design is finished when its test list can be written from it without inventing behavior.
 - **t-wada style TDD.** Follow the classic Red → Green → Refactor cycle, one test at a time, as specified in [docs/tdd.md](docs/tdd.md). Present the test list and align with the user before implementing, and base any "tests pass" claim on an actual test run.
 - **No code comments by default.** Let the code carry its own intent; rename or split rather than annotate. Only three cases are exempt: `TODO` comments, a "why" the code cannot show (a workaround for an OS, browser, or toolchain quirk, or a tradeoff a reader would mistake for a bug), and an explicit request in review. JSDoc is not covered by this rule — the analyzer extracts it into the catalog, so it is a product surface.

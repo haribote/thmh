@@ -11,6 +11,7 @@ See [CONTRIBUTING.md](../CONTRIBUTING.md) for how these documents are structured
 
 ## Development
 
+- [Writing a design document](design.md) — when a design is required, how to write one, and when it is finished.
 - [Test-Driven Development (t-wada style)](tdd.md) — the TDD cycle and rules this project follows.
 - [Commit messages](commit.md) — the Conventional Commits format for commits and PR titles.
 - [Filing an issue](issue.md) — the bilingual, background/tasks procedure for opening issues.
@@ -22,7 +23,7 @@ See [CONTRIBUTING.md](../CONTRIBUTING.md) for how these documents are structured
 - [manifest](manifest/index.md) — the `catalog.json` contract: schema, generation, versioning.
 - [mcp](mcp/index.md) — the agent-facing MCP server and its tools.
 - [cli](cli/index.md) — the `thmh` command-line interface.
-- [integration](integration/index.md) — interop with external ecosystems (shadcn, prebuilt manifests, remote publishing).
+- [integration](integration/index.md) — the host environment (Vite plugin, TypeScript toolchain, cva and Tailwind detection) and external ecosystems (shadcn, prebuilt manifests, remote publishing).
 
 ## UI
 

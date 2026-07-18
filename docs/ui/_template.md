@@ -13,6 +13,10 @@ used_by: []
 
 <!-- What this screen, layout, component, or off-screen feature is. -->
 
+## Requirements
+
+<!-- Link to the requirement in ../requirements.md that this satisfies, and quote the bullet. Append this feature's ID to that bullet in requirements.md. See ../design.md. -->
+
 ## Anatomy
 
 <!-- Structure and parts. -->
@@ -28,3 +32,7 @@ used_by: []
 ## Design
 
 <!-- Visual and information hierarchy, decisions. -->
+
+## Notes
+
+<!-- Edge cases, open questions, alternatives considered. -->
