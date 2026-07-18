@@ -116,9 +116,9 @@ A requirement that has been designed carries the feature ID of its design docume
 
 ### manifest
 
-- Produce a `catalog.json` capturing components, props, variants, defaults, and dependencies. _(Prototype)_
+- Produce a `catalog.json` capturing components, props, variants, defaults, and dependencies. _(Prototype)_ — MAN001, MAN003
 - Version the manifest via `schemaVersion` and publish a JSON Schema for external validation. _(Beta)_
-- Re-derive the manifest on file change during development. _(Prototype; incremental, file-level analysis targeted for Beta)_
+- Re-derive the manifest on file change during development. _(Prototype; incremental, file-level analysis targeted for Beta)_ — MAN002
 - Produce a static `catalog.json` via `thmh build` for CI and hosted catalogs. _(Prototype)_
 - Merge `defineCatalog` overrides into the generated manifest without duplication. _(GA)_
 - Detect breaking changes between manifest versions (prop or variant removal, signature changes). _(GA)_

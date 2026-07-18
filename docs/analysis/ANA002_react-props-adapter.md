@@ -1,7 +1,7 @@
 ---
 id: ANA002
 title: React props adapter
-depends_on: [ANA001]
+depends_on: [ANA001, MAN001]
 used_by: [ANA005]
 layer: feature
 status: stable

@@ -1,7 +1,7 @@
 ---
 id: ANA004
 title: Variant matrix
-depends_on: [ANA003]
+depends_on: [ANA003, MAN001]
 used_by: [ANA005]
 layer: foundation
 status: stable
@@ -38,6 +38,6 @@ Combination keys appear in axis order, and the combinations themselves vary the 
 
 **The matrix function has no production caller.** `cartesianProduct` is exported and tested, but nothing in the packages calls it. The catalog UI derives its own axes and builds its own grid in `packages/vite/src/client/ui.ts`, and the CLI never needs the matrix at all. So the requirement it satisfies is met by an unused function while the shipped behavior lives somewhere else, in a second implementation.
 
-That is the duplication this project treats as a defect, and it should be resolved rather than documented indefinitely. Two directions are open: have the UI consume this function, or record the matrix in the manifest so both the UI and the MCP tools read one derivation. The choice belongs with MAN003 and UIC002, since it changes what the manifest carries.
+That is the duplication this project treats as a defect, and it should be resolved rather than documented indefinitely. Two directions are open: have the UI consume this function, or record the matrix in the manifest so both the UI and the MCP tools read one derivation. The choice belongs with [MAN001](../manifest/MAN001_catalog-schema.md) and UIC002, since it changes what the manifest carries.
 
 **Axis derivation reads a cva definition specifically.** Once the variant adapter interface in ANA006 admits a second variant system, this signature has to widen to whatever that interface yields.

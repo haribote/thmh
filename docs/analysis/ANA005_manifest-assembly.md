@@ -1,8 +1,8 @@
 ---
 id: ANA005
 title: Manifest assembly
-depends_on: [ANA001, ANA002, ANA003, ANA004]
-used_by: []
+depends_on: [ANA001, ANA002, ANA003, ANA004, MAN001]
+used_by: [MAN003]
 layer: integration
 status: stable
 ---
@@ -77,4 +77,4 @@ Resolving this is the reason ANA006 exists. An adapter that is asked "which vari
 
 **Silence on a failed association.** Steps 1 and 2 falling through produces no warning. A component that should have had variants and did not is indistinguishable in the manifest from one that genuinely has none.
 
-**The schema dependency is not yet declared.** This stage produces the component records defined by the manifest schema, so it depends on MAN001. That document does not exist yet, and declaring a `depends_on` edge whose inverse cannot be written would leave the graph inconsistent. The manifest domain adds the edge in both directions when MAN001 is written.
+**This stage runs once per file, not once per project.** Walking a project, calling this for each of its source files, and wrapping the results in a catalog is [MAN003](../manifest/MAN003_catalog-generation.md).
