@@ -76,13 +76,13 @@ Frames load lazily, so cells outside the viewport are not fetched until scrolled
 
 **Header cells are `th`** for both the column headers and the row headers, which is the correct shape for a two-axis grid.
 
-**No `scope` attributes.** In a grid with both row and column headers, association is genuinely ambiguous without them: a screen reader has to guess whether a `th` heads its row or its column. This matters more here than in [UIC001](UIC001_props-table.md), where a single header row makes the guess reliable.
+**Headers declare what they head.** Column headers carry `scope="col"` and row headers `scope="row"`, so association is stated rather than guessed. That matters more here than in [UIC001](UIC001_props-table.md): with headers on both axes, a reader has no reliable way to infer which direction a `th` applies to.
 
-**The corner cell is a `th` with the row axis's name**, which is right, but with one axis it is an empty `th` announcing nothing.
+**The corner cell is a `th` with the row axis's name**, scoped to the column of row headers it sits above. With one axis it is an empty `th` announcing nothing.
 
-**The frames have no accessible name.** Every cell's iframe is unnamed, so a reader navigating frames encounters a row of identically anonymous ones. The cell's coordinates — which variant this actually is — exist only in the surrounding headers, and nothing carries them into the frame. This is the most consequential gap in the grid.
+**The table has an accessible name**, supplied by a caption naming the component whose variants it shows. The caption is visually hidden, because the component's name is already on screen in the heading directly above and repeating it would be noise for a sighted reader while remaining the only way a screen reader tells one table from another.
 
-**Nothing states which axes were pinned.** A reader is shown a two-dimensional slice of a higher-dimensional matrix with no indication that a slice is what they are looking at.
+**Every frame names what it renders.** A cell's `title` lists the component and every variant axis the frame is rendering, so a reader navigating frames hears `Button, variant default, size sm` rather than an anonymous frame. Axes that are pinned rather than displayed appear in that list too, which is the one place a reader learns the grid is a slice of something larger.
 
 ## Design
 
