@@ -42,9 +42,7 @@ flowchart TD
 
 **The preview entry is a virtual module.** `resolveId` claims one well-known id and `load` returns generated source for it, closing over the configured `css` path. Because the module goes through Vite, the preview gets the host's transforms — including the React Refresh preamble the middleware injects.
 
-**What the plugin requires of its host is declared, not assumed.** Vite is a peer dependency because the plugin is one. React and React DOM are peer dependencies because the preview entry renders with them ([UIX001](../ui/UIX001_preview-sandbox.md)), so a host without them cannot serve a preview at all.
-
-What the declaration buys is that the requirement is machine-readable, not that anyone is warned. Installing into a project with no React, measured on npm 11 and pnpm 11: npm resolves the peers itself and installs React, so the preview works without the host doing anything; pnpm installs neither and says nothing at install time, leaving `import "react"` unresolvable, though `pnpm ls` does report both as peers. A pnpm user therefore still meets the failure at the frame, and the declaration is what makes it diagnosable rather than mysterious.
+**What the plugin requires of its host is declared, not assumed.** Vite is a peer dependency because the plugin is one. React and React DOM are peer dependencies because the preview entry renders with them ([UIX001](../ui/UIX001_preview-sandbox.md)), so a host without them cannot serve a preview at all. They are peers rather than dependencies because the preview renders the host's components with the host's React; a second copy would be a second React.
 
 React lives here and not in `@thmh/core` because this is the Rendering layer. `@thmh/core` is the framework-independent half and depends on neither. A rendering adapter that admits other frameworks would make these peers optional; that is Future work, and until then the constraint is real and stated.
 
