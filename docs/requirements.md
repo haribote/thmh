@@ -119,7 +119,6 @@ A requirement that has been designed carries the feature ID of its design docume
 - Produce a `catalog.json` capturing components, props, variants, defaults, and dependencies. _(Prototype)_ — MAN001, MAN003
 - Version the manifest via `schemaVersion` and publish a JSON Schema for external validation. _(Beta)_
 - Re-derive the manifest on file change during development. _(Prototype; incremental, file-level analysis targeted for Beta)_ — MAN002
-- Produce a static `catalog.json` via `thmh build` for CI and hosted catalogs. _(Prototype)_ — CLI001
 - Merge `defineCatalog` overrides into the generated manifest without duplication. _(GA)_
 - Detect breaking changes between manifest versions (prop or variant removal, signature changes). _(GA)_
 
@@ -134,7 +133,7 @@ A requirement that has been designed carries the feature ID of its design docume
 
 ### cli
 
-- `thmh build`: generate a static `catalog.json`. _(Prototype)_ — CLI001
+- `thmh build`: generate a static `catalog.json` for CI and hosted catalogs. _(Prototype)_ — CLI001
 - `thmh init`: wire the plugin and register the MCP endpoint. _(Beta)_
 - `thmh dev`: run a standalone catalog server for repositories with no host app. _(Beta)_
 - `thmh mcp`: run the MCP server in stdio mode. _(Beta)_

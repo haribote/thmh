@@ -17,11 +17,7 @@ status: stable
 
 Satisfies, from [cli](../requirements.md#cli):
 
-> `thmh build`: generate a static `catalog.json`. _(Prototype)_
-
-and, from [manifest](../requirements.md#manifest):
-
-> Produce a static `catalog.json` via `thmh build` for CI and hosted catalogs. _(Prototype)_
+> `thmh build`: generate a static `catalog.json` for CI and hosted catalogs. _(Prototype)_
 
 ## Design
 
