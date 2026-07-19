@@ -5,22 +5,24 @@ import type { AnalyzerState } from "./analyzer";
 import { PREVIEW_ENTRY_ID } from "./preview";
 
 const SHELL_HTML = `<!doctype html>
-<html>
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>thmh catalog</title>
   </head>
   <body>
-    <div id="app"></div>
+    <main id="app"></main>
     <script type="module" src="/__thmh/ui.js"></script>
   </body>
 </html>
 `;
 
 const PREVIEW_HTML = `<!doctype html>
-<html>
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>thmh preview</title>
   </head>
   <body>

@@ -5,20 +5,25 @@ export function generatePreviewEntryCode(cssPath: string): string {
   return `import React from "react";
 import { createRoot } from "react-dom/client";
 
+function announce(message, role) {
+  const root = document.getElementById("root");
+  if (!root) return;
+  const node = document.createElement("p");
+  node.setAttribute("role", role);
+  node.textContent = message;
+  root.appendChild(node);
+}
+
 function renderError(message) {
   const root = document.getElementById("root");
   if (root) {
-    root.textContent = message;
+    root.textContent = "";
   }
+  announce(message, "alert");
 }
 
 function renderHint(message) {
-  const root = document.getElementById("root");
-  if (root) {
-    const hint = document.createElement("div");
-    hint.textContent = message;
-    root.appendChild(hint);
-  }
+  announce(message, "status");
 }
 
 const cssPath = ${JSON.stringify(cssPath)};

@@ -21,7 +21,7 @@ Satisfies, from [ui](../requirements.md#ui):
 
 ## Anatomy
 
-The server returns a near-empty shell: a document with a title, an empty mount point, and a module script. Everything visible is built in the browser from the fetched catalog.
+The server returns a near-empty shell: a document with a title, an empty mount point, and a module script. The mount point is the page's `main` landmark, so the region and the render target are one element rather than two. Everything visible is built in the browser from the fetched catalog.
 
 ```
 ┌─ /__thmh/ ─────────────────────────────────────────┐
@@ -74,13 +74,13 @@ There are no controls: no search, no filter, no sort, no routing. Every componen
 
 ## A11y
 
-Stated honestly, because this project treats accessibility as a default and the current state does not meet it.
+Stated honestly, including where the page still falls short.
 
-**The document has no `lang`.** Neither shell declares one, which leaves assistive technology guessing at the language of the content.
+**The document declares `lang="en"`.** The catalog's own text — the heading, the column names, the warnings — is English, so that is what it declares. The component names and descriptions it renders come from the reader's own source and may be anything; nothing marks those individually, which is a limit worth knowing rather than a gap to close here.
 
-**There is no viewport meta tag**, so a small screen renders the page at desktop width rather than reflowing.
+**A viewport meta tag lets the page reflow** instead of rendering at desktop width on a small screen.
 
-**There are no landmarks.** The content lives in a bare `div`, with no `main`, so there is nothing to skip to and no structure to navigate by region.
+**The content sits in a `main` landmark.** It is the mount point itself, so there is one region and it holds everything the page renders. That is enough to skip to; it is not yet enough to navigate *by*, which would need the component list to be its own region once there is more than one.
 
 **Headings are correct as far as they go**: one `h1`, then an `h2` per component, with no levels skipped.
 
