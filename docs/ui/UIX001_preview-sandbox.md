@@ -57,6 +57,10 @@ The stylesheet is imported in parallel with the component, not before it. A comp
 
 **There is no `main` landmark here, deliberately.** The frame holds one component and nothing else, so a region would name the whole document. Landmarks earn their place where a reader has somewhere else to go, and inside a preview there is nowhere.
 
+**The frame follows the reader's colour scheme**, matching the catalog around it rather than staying light. A reader working in dark sees the component on the surface it will actually sit on. What that costs is stated in [UIP001](UIP001_catalog-page.md): a component built for a light surface looks wrong, and nothing here can tell the difference.
+
+The document declares the scheme but paints no surface of its own. Its body stays transparent, and the visible background is the one the catalog gives the `iframe` element. Painting it here as well would put the same colour in two places, which is the sort of duplication that drifts.
+
 **The frame is named by whoever embeds it.** A preview knows what it renders only through its URL, and the name a reader needs — which component, which variant — is what the caller already had when it built that URL. So the `title` belongs on the embedding side, and [UIC002](UIC002_variant-matrix-grid.md) supplies it. Opening a preview URL directly still gives an unnamed document, which is acceptable: nothing is navigating frames there.
 
 **Error text is announced as an alert.** A failure renders into an element with `role="alert"`, so it reaches a screen reader whether it arrives before or after the frame is read, and it is distinguishable from a component that happens to render the same string. The stylesheet hint uses `role="status"` instead: it is worth hearing and not worth interrupting for.
@@ -82,3 +86,5 @@ Errors render inside the frame rather than propagating outward, so one broken co
 **A missing mount point fails quietly.** Rendering into a missing element throws, the catch tries to render the error into the same missing element, and nothing appears at all.
 
 **The generated module is a string.** It is assembled by concatenation rather than written as a file, so it is not type-checked, not linted, and not covered by any test.
+
+**The frame and the catalog stay in the same colour scheme by coincidence, not by agreement.** Both read `prefers-color-scheme`, so they match as long as neither can be overridden. The moment UIC003 lets a reader choose a scheme, the catalog will have to tell the frame which one — through the URL, like everything else a preview knows.
