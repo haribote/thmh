@@ -2,7 +2,7 @@
 id: MAN001
 title: Catalog schema
 depends_on: []
-used_by: [ANA002, ANA003, ANA004, ANA005, MAN002, MAN003]
+used_by: [ANA002, ANA003, ANA004, ANA005, MAN002, MAN003, CLI001]
 layer: foundation
 status: stable
 ---
