@@ -149,10 +149,10 @@ A requirement that has been designed carries the feature ID of its design docume
 
 ### ui
 
-- Serve a browsable catalog at `/__thmh/`. _(Prototype)_
-- Render each variant in a sandboxed iframe. _(Prototype)_
-- Show the variant matrix and a props table (name, type, required, default, description). _(Prototype)_
-- Live-reload the catalog when the manifest changes. _(Prototype)_
+- Serve a browsable catalog at `/__thmh/`. _(Prototype)_ — UIP001
+- Render each variant in a sandboxed iframe. _(Prototype)_ — UIX001
+- Show the variant matrix and a props table (name, type, required, default, description). _(Prototype)_ — UIC001, UIC002
+- Live-reload the catalog when the manifest changes. _(Prototype)_ — UIX002
 - Provide search and filtering across components. _(Beta)_
 - Link catalog entries to their feature documents. _(Future)_
 
