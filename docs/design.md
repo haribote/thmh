@@ -56,6 +56,10 @@ The five non-UI domains share four sections:
 
 The analysis domain shows where the line falls. Only the document describing how the stages combine carries diagrams — one for the pipeline, one for the rule that decides which variant definition belongs to which component. The four documents that each describe a single stage say what they need in a sentence, and a diagram there would restate it rather than add to it.
 
+**A ui document may show layout as a text wireframe**, in a plain fenced block, under Anatomy. The same test applies: it earns its space when the arrangement is the point, and not when it redraws a list of parts. Of the five ui documents, two have one — the page and the variant grid — because in both the arrangement carries a decision that prose states poorly.
+
+Draw the intent, not the pixels. A wireframe here says which things sit where and what comes before what; it is not a copy of the rendered screen, and it should not acquire colors, spacing, or type. Screenshots are deliberately not used: an image of the running catalog is a hand-maintained duplicate of something the code already determines, and it goes stale silently, which is the failure this project exists to remove. To see the real thing, run the dev server.
+
 Writing a design for something already implemented follows the same procedure. Describe what the code does now, and put what it should do instead in Notes.
 
 ## Linking to the requirement

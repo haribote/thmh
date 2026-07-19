@@ -23,6 +23,26 @@ Satisfies, together with [UIC001](UIC001_props-table.md), from [ui](../requireme
 
 A table whose columns and rows are two variant axes, with a preview iframe in every cell.
 
+For a component with `variant` of two options and `size` of three, `size` becomes the columns:
+
+```
+┌─────────┬──────────┬──────────┬──────────┐
+│ variant │    sm    │    md    │    lg    │  ← column axis: the one
+├─────────┼──────────┼──────────┼──────────┤    with the most options
+│  solid  │ ┌──────┐ │ ┌──────┐ │ ┌──────┐ │
+│         │ │Button│ │ │Button│ │ │Button│ │    iframe, 90px tall,
+│         │ └──────┘ │ └──────┘ │ └──────┘ │    children = the
+├─────────┼──────────┼──────────┼──────────┤    component's own name
+│  ghost  │ ┌──────┐ │ ┌──────┐ │ ┌──────┐ │
+│         │ │Button│ │ │Button│ │ │Button│ │
+│         │ └──────┘ │ └──────┘ │ └──────┘ │
+└─────────┴──────────┴──────────┴──────────┘
+     ↑
+  row axis. The corner cell carries its name.
+  Every axis beyond these two is pinned to one
+  value and never appears.
+```
+
 Axes are sorted by how many options they have, largest first. The largest becomes the columns, the second largest the rows, and every remaining axis is pinned to one value: its default, or its first option when it has no default.
 
 ```mermaid

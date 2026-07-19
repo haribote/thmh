@@ -23,21 +23,44 @@ Satisfies, from [ui](../requirements.md#ui):
 
 The server returns a near-empty shell: a document with a title, an empty mount point, and a module script. Everything visible is built in the browser from the fetched catalog.
 
-```mermaid
-flowchart TD
-    S["Shell HTML: div#app + ui.js"] --> B["Inject the stylesheet into head"]
-    B --> F["Fetch /__thmh/api/catalog.json"]
-    F --> R["Render"]
-    R --> H["h1 'thmh catalog'"]
-    R --> W["Warnings block, when any"]
-    R --> L["One section per component"]
-    L --> N["h2 name, file path, description"]
-    L --> P["UIX001 or UIC002: preview"]
-    L --> T["UIC001: props table"]
-    R --> E["UIX002: subscribe for updates"]
+```
+┌─ /__thmh/ ─────────────────────────────────────────┐
+│  thmh catalog                                 h1   │
+│                                                    │
+│  ┌─ warnings ──────────────────────────────────┐   │  only when
+│  │ Warnings                                    │   │  the catalog
+│  │ • src/Bad.tsx: cva call is not assigned…    │   │  has any
+│  └─────────────────────────────────────────────┘   │
+│                                                    │
+│  ┌─ section.component ─────────────────────────┐   │
+│  │ Button                                 h2   │   │
+│  │ src/components/ui/button.tsx      monospace │   │
+│  │ A clickable thing.                 optional │   │
+│  │                                             │   │
+│  │  ── preview ──── UIC002 when it has variants│   │
+│  │                  UIX001 alone when it does  │   │
+│  │                  not                        │   │
+│  │                                             │   │
+│  │  ── props table ─────────────────── UIC001  │   │
+│  └─────────────────────────────────────────────┘   │
+│                                                    │
+│  ┌─ section.component ─────────────────────────┐   │
+│  │ App …                                       │   │
+│  └─────────────────────────────────────────────┘   │
+└────────────────────────────────────────────────────┘
 ```
 
 A component section holds its name as a second-level heading, its file path in monospace, an optional description, then the preview and the props table in that order. A component with a variant definition gets the matrix; one without gets a single preview.
+
+Getting there is four steps, and the last of them is what keeps the page current:
+
+```mermaid
+flowchart LR
+    S["Shell HTML"] --> B["Inject the stylesheet"]
+    B --> F["Fetch the catalog"]
+    F --> R["Render"]
+    R --> E["UIX002: subscribe"]
+```
 
 ## Behavior
 
