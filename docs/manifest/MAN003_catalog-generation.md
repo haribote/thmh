@@ -2,7 +2,7 @@
 id: MAN003
 title: Catalog generation
 depends_on: [MAN001, ANA005, INT002]
-used_by: [MAN002]
+used_by: [MAN002, CLI001]
 layer: integration
 status: stable
 ---
@@ -50,4 +50,4 @@ The whole project is analyzed on every call. There is no incremental path and no
 
 **The default glob only matches `.tsx`.** A component written in a `.ts` file is never discovered unless the caller overrides `include`. The dev-time file watcher, by contrast, watches both `.ts` and `.tsx`, so editing a `.ts` file triggers a re-analysis that cannot observe it.
 
-**One dependency edge is not yet declared.** The `thmh build` command that CLI001 will describe is one of this stage's two callers. That document does not exist, and declaring an edge whose inverse cannot be written would leave the graph one-directional. The cli domain adds it in both directions when CLI001 is written.
+**This stage has two callers.** The dev-time analyzer in [MAN002](MAN002_dev-manifest-refresh.md) holds its result in memory; the `thmh build` command in [CLI001](../cli/CLI001_build-command.md) writes it to disk. Neither reuses the other's work, so a project served and built in the same session is analyzed twice.
