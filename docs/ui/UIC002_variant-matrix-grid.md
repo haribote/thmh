@@ -23,25 +23,30 @@ Satisfies, together with [UIC001](UIC001_props-table.md), from [ui](../requireme
 
 A table whose columns and rows are two variant axes, with a preview iframe in every cell.
 
-For a component with `variant` of two options and `size` of three, `size` becomes the columns:
+The `Button` in the example app declares `variant` with five options and `size` with three, so `variant` takes the columns:
 
 ```
-┌─────────┬──────────┬──────────┬──────────┐
-│ variant │    sm    │    md    │    lg    │  ← column axis: the one
-├─────────┼──────────┼──────────┼──────────┤    with the most options
-│  solid  │ ┌──────┐ │ ┌──────┐ │ ┌──────┐ │
-│         │ │Button│ │ │Button│ │ │Button│ │    iframe, 90px tall,
-│         │ └──────┘ │ └──────┘ │ └──────┘ │    children = the
-├─────────┼──────────┼──────────┼──────────┤    component's own name
-│  ghost  │ ┌──────┐ │ ┌──────┐ │ ┌──────┐ │
-│         │ │Button│ │ │Button│ │ │Button│ │
-│         │ └──────┘ │ └──────┘ │ └──────┘ │
-└─────────┴──────────┴──────────┴──────────┘
-     ↑
-  row axis. The corner cell carries its name.
-  Every axis beyond these two is pinned to one
-  value and never appears.
+┌─────────┬──────────┬───────────┬─────────────┬──────────┬──────────┐
+│  size   │ default  │ secondary │ destructive │ outline  │ ghost    │
+├─────────┼──────────┼───────────┼─────────────┼──────────┼──────────┤
+│   sm    │ [Button] │ [Button]  │  [Button]   │ [Button] │ [Button] │
+├─────────┼──────────┼───────────┼─────────────┼──────────┼──────────┤
+│ default │ [Button] │ [Button]  │  [Button]   │ [Button] │ [Button] │
+├─────────┼──────────┼───────────┼─────────────┼──────────┼──────────┤
+│   lg    │ [Button] │ [Button]  │  [Button]   │ [Button] │ [Button] │
+└─────────┴──────────┴───────────┴─────────────┴──────────┴──────────┘
+    ↑          ↑
+    │          └── variant: five options, so it takes the columns
+    │
+    └── size: three options, so it takes the rows. The corner cell
+        carries its name. Any further axis is pinned to one value
+        and never appears.
+
+    Each cell is an iframe 90 px tall, rendering Button with its
+    children set to the string "Button".
 ```
+
+The axis names carry no meaning to thmh. `variant` and `size` are what this component's author happened to write; a component declaring `tone` and `density` produces the same grid with those names. What decides the layout is only how many options each axis has.
 
 Axes are sorted by how many options they have, largest first. The largest becomes the columns, the second largest the rows, and every remaining axis is pinned to one value: its default, or its first option when it has no default.
 
