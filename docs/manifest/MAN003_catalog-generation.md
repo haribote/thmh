@@ -1,7 +1,7 @@
 ---
 id: MAN003
 title: Catalog generation
-depends_on: [MAN001, ANA005]
+depends_on: [MAN001, ANA005, INT002]
 used_by: [MAN002]
 layer: integration
 status: stable
@@ -25,7 +25,7 @@ The input is a root directory, an optional tsconfig path, and an optional list o
 
 ```mermaid
 flowchart TD
-    O["root, tsconfigPath, include"] --> P["INT002: create the ts-morph project"]
+    O["root, tsconfigPath, include"] --> P["INT002: resolve the TypeScript project"]
     P --> G["Match include globs under root<br/>default: src/**/*.tsx"]
     G --> A["Add exactly those files to the project"]
     A --> L["Per source file"]
@@ -50,4 +50,4 @@ The whole project is analyzed on every call. There is no incremental path and no
 
 **The default glob only matches `.tsx`.** A component written in a `.ts` file is never discovered unless the caller overrides `include`. The dev-time file watcher, by contrast, watches both `.ts` and `.tsx`, so editing a `.ts` file triggers a re-analysis that cannot observe it.
 
-**Two dependency edges are not yet declared.** This stage builds its project through the TypeScript project resolution that INT002 will describe, and the `thmh build` command that CLI001 will describe is one of its two callers. Neither document exists, and declaring an edge whose inverse cannot be written would leave the graph one-directional. The integration and cli domains add them in both directions when those documents are written.
+**One dependency edge is not yet declared.** The `thmh build` command that CLI001 will describe is one of this stage's two callers. That document does not exist, and declaring an edge whose inverse cannot be written would leave the graph one-directional. The cli domain adds it in both directions when CLI001 is written.
