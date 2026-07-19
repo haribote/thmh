@@ -41,6 +41,8 @@ The URL carries three parameters: the component's file path, the export name, an
 
 The route's HTML goes through the host's index-HTML transform. That is not cosmetic: React's Fast Refresh plugin injects a preamble there, and without it the component module throws on load.
 
+The generated entry imports `react` and `react-dom/client` and renders through `createRoot`, so the host must supply both. That requirement is declared as a peer dependency of `@thmh/vite` ([INT001](../integration/INT001_vite-plugin.md)).
+
 ## Behavior
 
 The file parameter is rejected when it is absent, absolute, contains `..`, or contains a colon. An accepted path is imported relative to the server root.

@@ -42,6 +42,10 @@ flowchart TD
 
 **The preview entry is a virtual module.** `resolveId` claims one well-known id and `load` returns generated source for it, closing over the configured `css` path. Because the module goes through Vite, the preview gets the host's transforms — including the React Refresh preamble the middleware injects.
 
+**What the plugin requires of its host is declared, not assumed.** Vite is a peer dependency because the plugin is one. React and React DOM are peer dependencies because the preview entry renders with them ([UIX001](../ui/UIX001_preview-sandbox.md)), so a host without them cannot serve a preview at all. They are peers rather than dependencies because the preview renders the host's components with the host's React; a second copy would be a second React.
+
+React lives here and not in `@thmh/core` because this is the Rendering layer. `@thmh/core` is the framework-independent half and depends on neither. A rendering adapter that admits other frameworks would make these peers optional; that is Future work, and until then the constraint is real and stated.
+
 ## Notes
 
 **Nothing is torn down when the server closes.** The watcher subscription is never removed and a pending debounce timer is never cleared. In a long-lived process that restarts servers, such as a test run, analyzers accumulate.
@@ -51,8 +55,6 @@ flowchart TD
 **Exclusion is by path segment, so it over-matches.** A directory legitimately named `dist` inside `src` is skipped along with build output. The rule cannot tell a project's source directory from a build artifact of the same name.
 
 **The `css` default is a convention, not a discovery.** A project whose stylesheet is not at `/src/index.css` gets a preview that fails to load it until the option is set. Nothing inspects the project to find out.
-
-**The preview needs React, and nothing says so.** The generated entry imports `react` and `react-dom/client` unconditionally, while the package declares only `vite` as a peer dependency. The requirement on the host is real and undeclared: a project without React installed gets a preview that fails to resolve its imports, with no signal at install time. Declaring the peer would state the constraint, at the cost of admitting a framework dependency in a package whose analysis half is meant to be framework-independent — which is the same tension ANA006 addresses on the analysis side.
 
 **Watching is broader than the module graph.** Using the raw watcher means edits to files Vite never loaded still trigger analysis, which is what makes a component in an unimported file appear in the catalog. It also means edits to unrelated `.ts` files cost a full re-analysis.
 
