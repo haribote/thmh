@@ -2,7 +2,7 @@
 id: MAN002
 title: Dev-time manifest refresh
 depends_on: [MAN001, MAN003]
-used_by: [INT001]
+used_by: [INT001, UIX002]
 layer: feature
 status: stable
 ---

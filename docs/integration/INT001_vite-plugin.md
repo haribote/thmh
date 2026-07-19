@@ -1,7 +1,7 @@
 ---
 id: INT001
 title: Vite plugin
-depends_on: [MAN002]
+depends_on: [MAN002, UIP001, UIX001]
 used_by: []
 layer: integration
 status: stable
@@ -58,4 +58,4 @@ flowchart TD
 
 **Build-time output is out of scope here.** Because the plugin is serve-only, the only way to get a static `catalog.json` is the CLI, described by CLI001.
 
-**Two dependency edges are not yet declared.** This plugin mounts the catalog's HTTP routes and serves the preview entry, which UIX001 and the ui domain's page documents will describe. Those documents do not exist, and declaring an edge whose inverse cannot be written would leave the graph one-directional. The ui domain adds them in both directions when they are written.
+**The plugin is where the catalog is assembled.** It mounts the routes that serve [UIP001](../ui/UIP001_catalog-page.md) and [UIX001](../ui/UIX001_preview-sandbox.md), and it is the only place those two and the analyzer meet. Nothing else in the graph composes them, which is why an integration-layer document depends on feature-layer ones rather than the other way round.
