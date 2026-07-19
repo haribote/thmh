@@ -57,7 +57,7 @@ The stylesheet is imported in parallel with the component, not before it. A comp
 
 **There is no `main` landmark here, deliberately.** The frame holds one component and nothing else, so a region would name the whole document. Landmarks earn their place where a reader has somewhere else to go, and inside a preview there is nowhere.
 
-**The frame has no accessible name**, and this document is where that is best fixed: the name would have to describe which component and which variant the frame shows, and only the URL knows both. Callers currently pass no `title`, so a reader navigating frames finds a sequence of anonymous ones. See [UIC002](UIC002_variant-matrix-grid.md), where the consequence is sharpest.
+**The frame is named by whoever embeds it.** A preview knows what it renders only through its URL, and the name a reader needs — which component, which variant — is what the caller already had when it built that URL. So the `title` belongs on the embedding side, and [UIC002](UIC002_variant-matrix-grid.md) supplies it. Opening a preview URL directly still gives an unnamed document, which is acceptable: nothing is navigating frames there.
 
 **Error text is announced as an alert.** A failure renders into an element with `role="alert"`, so it reaches a screen reader whether it arrives before or after the frame is read, and it is distinguishable from a component that happens to render the same string. The stylesheet hint uses `role="status"` instead: it is worth hearing and not worth interrupting for.
 

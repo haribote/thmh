@@ -35,11 +35,11 @@ A missing default or description renders as an empty cell rather than a placehol
 
 ## A11y
 
-**Header cells are marked up as header cells.** The first row uses `th`, which is the part that matters most and is done correctly.
+**Header cells are marked up as header cells**, and each declares `scope="col"`. With a single header row a screen reader would usually infer that anyway; declaring it removes the inference.
 
-**No `scope` attributes.** With a single header row a screen reader will usually infer column association, but the association is not declared, so it is inferred rather than stated.
+**The table has an accessible name**, from a caption naming the component whose props it lists. Without it, a reader moving from table to table hears a series of identical unnamed tables. The caption is visually hidden: the component's name is already in the heading above, so showing it again would be redundant on screen while remaining the only thing that distinguishes the tables to a screen reader.
 
-**No `thead`, `tbody`, or `caption`.** The table has no accessible name, so in a page with one table per component, a reader moving by table hears five identical unnamed tables. A caption naming the component would fix it.
+**There is still no `thead` or `tbody`.** Nothing depends on them here — the table is one header row and a body — but their absence means the header row is not marked as a group.
 
 **The cva badge conveys meaning through a visual token.** It is a `span` with text content `cva`, so the text is read out, but nothing explains what it means. It reads as the bare word "cva" appended to a prop name.
 
