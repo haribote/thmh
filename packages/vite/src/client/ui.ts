@@ -45,6 +45,17 @@ th, td { border: 1px solid #e2e2e2; padding: 4px 8px; text-align: left; vertical
   padding: 1px 6px;
   margin-left: 6px;
 }
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
 iframe {
   width: 100%;
   height: 90px;

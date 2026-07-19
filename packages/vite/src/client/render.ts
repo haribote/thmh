@@ -40,11 +40,29 @@ function deriveAxes(cva: CvaDoc): VariantAxis[] {
   }));
 }
 
+function caption(text: string): HTMLElement {
+  return h("caption", { class: "visually-hidden" }, [text]);
+}
+
+function frameTitle(
+  componentName: string,
+  variants: Record<string, string>,
+): string {
+  const parts = Object.entries(variants).map(
+    ([axis, option]) => `${axis} ${option}`,
+  );
+  return [componentName, ...parts].join(", ");
+}
+
 export function renderSinglePreview(component: ComponentDoc): HTMLElement {
   const src = buildPreviewUrl(component.filePath, component.name, {
     children: component.name,
   });
-  return h("iframe", { src, loading: "lazy" });
+  return h("iframe", {
+    src,
+    loading: "lazy",
+    title: frameTitle(component.name, {}),
+  });
 }
 
 export function renderMatrix(
@@ -64,15 +82,22 @@ export function renderMatrix(
     pinned[axis.name] = cva.defaultVariants?.[axis.name] ?? axis.options[0];
   }
 
-  const headerRow = h("tr", {}, [h("th", {}, [rowAxis ? rowAxis.name : ""])]);
+  const headerRow = h("tr", {}, [
+    h("th", { scope: "col" }, [rowAxis ? rowAxis.name : ""]),
+  ]);
   for (const columnOption of colAxis.options) {
-    headerRow.append(h("th", {}, [columnOption]));
+    headerRow.append(h("th", { scope: "col" }, [columnOption]));
   }
 
-  const table = h("table", {}, [headerRow]);
+  const table = h("table", {}, [
+    caption(`Variants of ${component.name}`),
+    headerRow,
+  ]);
   const rowOptions = rowAxis ? rowAxis.options : [""];
   for (const rowOption of rowOptions) {
-    const row = h("tr", {}, [h("th", {}, [rowAxis ? rowOption : ""])]);
+    const row = h("tr", {}, [
+      h("th", { scope: "row" }, [rowAxis ? rowOption : ""]),
+    ]);
     for (const columnOption of colAxis.options) {
       const props: Record<string, unknown> = {
         [colAxis.name]: columnOption,
@@ -83,22 +108,41 @@ export function renderMatrix(
         props[rowAxis.name] = rowOption;
       }
       const src = buildPreviewUrl(component.filePath, component.name, props);
-      row.append(h("td", {}, [h("iframe", { src, loading: "lazy" })]));
+      const shown: Record<string, string> = { [colAxis.name]: columnOption };
+      if (rowAxis) {
+        shown[rowAxis.name] = rowOption;
+      }
+      const variants = { ...shown, ...pinned };
+      row.append(
+        h("td", {}, [
+          h("iframe", {
+            src,
+            loading: "lazy",
+            title: frameTitle(component.name, variants),
+          }),
+        ]),
+      );
     }
     table.append(row);
   }
   return table;
 }
 
-export function renderPropsTable(props: PropDoc[]): HTMLElement {
-  const headerRow = h("tr", {}, [
-    h("th", {}, ["name"]),
-    h("th", {}, ["type"]),
-    h("th", {}, ["required"]),
-    h("th", {}, ["default"]),
-    h("th", {}, ["description"]),
+export function renderPropsTable(
+  componentName: string,
+  props: PropDoc[],
+): HTMLElement {
+  const headerRow = h(
+    "tr",
+    {},
+    ["name", "type", "required", "default", "description"].map((label) =>
+      h("th", { scope: "col" }, [label]),
+    ),
+  );
+  const table = h("table", {}, [
+    caption(`Props of ${componentName}`),
+    headerRow,
   ]);
-  const table = h("table", {}, [headerRow]);
   for (const prop of props) {
     const nameCell = h("td", {}, [prop.name]);
     if (prop.source === "cva") {
@@ -130,7 +174,7 @@ function renderComponent(component: ComponentDoc): HTMLElement {
       ? renderMatrix(component, component.cva)
       : renderSinglePreview(component),
   );
-  section.append(renderPropsTable(component.props));
+  section.append(renderPropsTable(component.name, component.props));
   return section;
 }
 
