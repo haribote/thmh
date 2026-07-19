@@ -53,11 +53,13 @@ The stylesheet is imported in parallel with the component, not before it. A comp
 
 ## A11y
 
-**The document has no `lang`**, like the catalog shell.
+**The document declares `lang="en"` and carries a viewport meta tag**, like the catalog shell. Only thmh's own text is in that language; what the component renders is the reader's.
+
+**There is no `main` landmark here, deliberately.** The frame holds one component and nothing else, so a region would name the whole document. Landmarks earn their place where a reader has somewhere else to go, and inside a preview there is nowhere.
 
 **The frame has no accessible name**, and this document is where that is best fixed: the name would have to describe which component and which variant the frame shows, and only the URL knows both. Callers currently pass no `title`, so a reader navigating frames finds a sequence of anonymous ones. See [UIC002](UIC002_variant-matrix-grid.md), where the consequence is sharpest.
 
-**Error text is plain text in the body.** It is readable and in the document order, but it is not marked as an error and carries no role, so it is indistinguishable from a component that happens to render that string.
+**Error text is announced as an alert.** A failure renders into an element with `role="alert"`, so it reaches a screen reader whether it arrives before or after the frame is read, and it is distinguishable from a component that happens to render the same string. The stylesheet hint uses `role="status"` instead: it is worth hearing and not worth interrupting for.
 
 **The rendered component's own accessibility is its author's.** Nothing here inspects or reports on it, which is a natural place for the catalog to grow: the frame is exactly where an automated check would run.
 

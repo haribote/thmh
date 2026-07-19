@@ -28,6 +28,19 @@ describe("generatePreviewEntryCode", () => {
     expect(code).toContain('import { createRoot } from "react-dom/client";');
   });
 
+  it("announces a failure as an alert", () => {
+    const code = generatePreviewEntryCode("/src/index.css");
+
+    expect(code).toContain('setAttribute("role", role)');
+    expect(code).toContain('announce(message, "alert")');
+  });
+
+  it("announces the stylesheet hint politely, as a status", () => {
+    const code = generatePreviewEntryCode("/src/index.css");
+
+    expect(code).toContain('announce(message, "status")');
+  });
+
   it("imports nothing the package does not declare as a peer dependency", () => {
     const manifest = JSON.parse(
       readFileSync(new URL("../package.json", import.meta.url), "utf-8"),
