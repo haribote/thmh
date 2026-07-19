@@ -53,7 +53,7 @@ The stylesheet is imported in parallel with the component, not before it. A comp
 
 ## A11y
 
-**The document declares `lang="en"` and carries a viewport meta tag**, like the catalog shell. Only thmh's own text is in that language; what the component renders is the reader's.
+**The document declares `lang="en"` and carries a viewport meta tag**, like the catalog shell — and here the declaration is wrong more often than it is right. A preview renders the host's component and nothing else; thmh contributes text only when something fails. So unlike the catalog, this document should follow the host's language rather than thmh's. It does not yet, because nothing reads the host's `lang`. Recorded under [ui](../requirements.md#ui).
 
 **There is no `main` landmark here, deliberately.** The frame holds one component and nothing else, so a region would name the whole document. Landmarks earn their place where a reader has somewhere else to go, and inside a preview there is nowhere.
 

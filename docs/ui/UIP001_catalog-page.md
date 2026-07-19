@@ -76,7 +76,9 @@ There are no controls: no search, no filter, no sort, no routing. Every componen
 
 Stated honestly, including where the page still falls short.
 
-**The document declares `lang="en"`.** The catalog's own text — the heading, the column names, the warnings — is English, so that is what it declares. The component names and descriptions it renders come from the reader's own source and may be anything; nothing marks those individually, which is a limit worth knowing rather than a gap to close here.
+**The document declares `lang="en"`, and that is only half right.** The page carries two kinds of text. thmh's own interface — the heading, the column names, the warnings — is English, and the declaration is accurate for it. Everything taken out of the host's source — component names, file paths, JSDoc descriptions — may be in any language, and nothing marks those individually.
+
+Following the host's own `lang` instead would not fix this; it would move the error. A Japanese host would make `Warnings` and `required` announce as Japanese. Only marking each element by the language of its own text is correct, and the missing input is that JSDoc carries no language of its own. The requirement is recorded under [ui](../requirements.md#ui); what to do about the unmarked host content is not yet designed.
 
 **A viewport meta tag lets the page reflow** instead of rendering at desktop width on a small screen.
 

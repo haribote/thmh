@@ -154,13 +154,15 @@ A requirement that has been designed carries the feature ID of its design docume
 - Show the variant matrix and a props table (name, type, required, default, description). _(Prototype)_ — UIC001, UIC002
 - Live-reload the catalog when the manifest changes. _(Prototype)_ — UIX002
 - Provide search and filtering across components. _(Beta)_
+- Declare the language of what the catalog renders, distinguishing thmh's own interface text from content taken out of the host's source. _(Beta)_
+- Offer thmh's own interface in languages other than English. _(GA)_
 - Link catalog entries to their feature documents. _(Future)_
 
 ## Non-functional requirements
 
 - **Manifest stability and versioning.** `catalog.json` is a contract. Its schema is versioned so it can evolve while consumers (CI, agents) detect incompatibility, and breaking changes are surfaced rather than silent.
 - **Performance through incremental analysis.** Saving a file and seeing the change reflected in the catalog stays within a few seconds, and analysis remains practical on large component sets by re-analyzing only what changed.
-- **Accessibility of the catalog UI.** The human-facing catalog is keyboard navigable, uses semantic HTML, and meets sufficient color contrast — accessibility is a default, not an afterthought.
+- **Accessibility of the catalog UI.** The human-facing catalog is keyboard navigable, uses semantic HTML, declares the language of what it renders, and meets sufficient color contrast — accessibility is a default, not an afterthought.
 - **Open development.** thmh stays open source with an open, documented manifest schema, and its agent guidance is agent-agnostic (it lives in `AGENTS.md` and `docs/`, not locked to one coding agent), so any MCP-compatible tool can consume a published catalog.
 
 ## Constraints and assumptions
