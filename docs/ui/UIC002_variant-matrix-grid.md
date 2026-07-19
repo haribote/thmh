@@ -100,6 +100,26 @@ Fixed-height frames keep rows aligned so the grid reads as a grid. The cost is a
 
 **Beyond two axes, most of the matrix is unreachable.** A component with three axes shows one slice, chosen by a rule the reader cannot see or change. The requirement calls for the full variant matrix, and what is displayed is a projection of it.
 
+The projection is what keeps the display bounded, so the cost lands on coverage rather than on cell count. Measured against the example app's `Button` and two hypothetical axes added to it:
+
+| Axes | Combinations | Cells shown | Coverage |
+| --- | --- | --- | --- |
+| `variant(5) × size(3)` | 15 | 15 | 100% |
+| `+ tone(4)` | 60 | 20 | 33% |
+| `+ density(3)` | 180 | 20 | 11% |
+
+Cells are capped at the product of the two largest axes, so nothing explodes on screen. What grows instead is the share of the matrix nobody can see, and there is no indication on the page that anything is missing.
+
+Three directions are open, and none is chosen yet:
+
+- **Let the reader pick.** Choosing which two axes are on screen, and what the rest are pinned to, makes every combination reachable. It costs interaction state and gives up the property that one screen shows everything.
+- **Lay the axes out independently.** Rendering each axis against the others' defaults is a sum rather than a product — 5 + 3 instead of 5 × 3 — so every option appears at least once and the growth is linear. Interactions between axes stop being visible.
+- **Cross only the axes that interact.** `compoundVariants` already declares which axes affect each other: an entry conditioned on both `variant` and `size` says those two interact, and axes that never co-occur in one are independent. The manifest therefore already carries the information needed to decide which pairs deserve a full product and which can be laid out linearly.
+
+The third is the most promising and has a caveat worth stating: a component can break in a combination its author never wrote a compound variant for, and rendering the product is how that gets noticed. `Button` declares no compound variants at all, so this rule would reduce it from 15 cells to 8 — and lose the check that all 15 actually render.
+
+**Rendering cost grows with the cells shown, not with the matrix.** Every cell is a full document with its own React runtime. `Button` alone is 15 of them, and a catalog of fifty such components is several hundred. `loading="lazy"` defers the ones off screen, which bounds what is fetched but not what the page ultimately holds.
+
 **Compound variants are invisible.** The manifest records them, and nothing here renders or mentions them, so a combination that produces different classes looks the same as one that does not.
 
 **Passing the component name as children assumes it accepts children.** A component that renders nothing for unexpected children shows an empty cell, and one that requires a specific child type may error inside its frame.
