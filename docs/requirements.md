@@ -141,8 +141,8 @@ A requirement that has been designed carries the feature ID of its design docume
 
 ### integration
 
-- Run as a Vite plugin inheriting the host app's config (aliases, CSS, environment). _(Prototype)_
-- Analyze through the stable ts-morph (TS 6.0) API, compatible with consumer projects on TypeScript 7. _(Prototype)_
+- Run as a Vite plugin inheriting the host app's config (aliases, CSS, environment). _(Prototype)_ — INT001
+- Analyze through the stable ts-morph (TS 6.0) API, compatible with consumer projects on TypeScript 7. _(Prototype)_ — INT002
 - Detect cva and Tailwind automatically for common setups, with explicit registration available. _(Beta)_
 - Interoperate with shadcn `registry.json`. _(GA, optional)_
 - Catalog Next.js projects without a Vite host (via the standalone path), previewing client components (`'use client'`) and common `next/*` primitives. _(GA; RSC preview deferred)_

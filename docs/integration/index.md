@@ -4,6 +4,7 @@ How thmh meets the world outside its own packages, in two directions. Inward: th
 
 | ID | Title | Summary |
 | --- | --- | --- |
-| _No documents yet._ | | |
+| [INT001](INT001_vite-plugin.md) | Vite plugin | thmh attached to the host app's dev server, inheriting its config. |
+| [INT002](INT002_typescript-project-resolution.md) | TypeScript project resolution | The compiler options and the file set that analysis reads through. |
 
 See [requirements](../requirements.md) and [CONTRIBUTING.md](../../CONTRIBUTING.md).
