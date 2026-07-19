@@ -53,4 +53,10 @@ describe("the preview shell", () => {
       '<meta name="viewport" content="width=device-width, initial-scale=1" />',
     );
   });
+
+  it("follows the same colour scheme as the catalog around it", async () => {
+    expect(await serve("/__thmh/preview")).toContain(
+      "color-scheme: light dark",
+    );
+  });
 });

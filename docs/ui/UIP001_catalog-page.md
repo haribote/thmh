@@ -86,9 +86,9 @@ Stated honestly, including where the page still falls short.
 
 **The warnings block is not reachable by structure.** It is a `div` introduced by a bold `strong`, not a heading, so it does not appear in a heading list. It is also not a live region, which is right for content present at first paint and wrong the moment warnings start arriving without a reload.
 
-**Contrast passes.** Body text is 17.4:1, the file path 5.74:1, the cva badge 8.06:1, and warning text 15.71:1 — all above the 4.5:1 required for normal text.
+**Contrast passes in both schemes.** Light: body text 17.40:1, file path 5.74:1, cva badge 8.06:1, warnings 15.71:1. Dark: 15.03:1, 7.18:1, 7.64:1, 10.93:1. All are above the 4.5:1 required for normal text, and every value was computed rather than judged by eye.
 
-**Dark mode is declared but not implemented.** The stylesheet opts in with `color-scheme: light dark` while hardcoding a white background and near-black text. A reader whose system is dark gets browser-rendered parts in dark against a page that stays light, which is worse than not opting in at all.
+**The page follows the reader's environment.** `color-scheme: light dark` is now backed by a `prefers-color-scheme` block, so what the browser renders and what the stylesheet renders agree. There is no way to override the environment; that arrives with the controls in UIC003.
 
 ## Design
 
@@ -97,6 +97,8 @@ The visual hierarchy is flat by construction: a page title, then a stack of equa
 Within a card the order encodes what a reader wants first — the name, then where it lives, then what it looks like, then what it takes. The preview comes before the props table because seeing the component answers more questions than reading its signature.
 
 The palette is deliberately plain and system-font-based, so a component under review is not competing with the catalog's own styling for attention.
+
+Both schemes are built from the same four roles — surface, text, muted text, and border — so the dark palette is a substitution rather than a second design. Preview frames follow the catalog's scheme rather than staying light, on the grounds that a reader working in dark wants to see the component as it will appear there. That places a burden on the component: one built for a light surface will look wrong, and the catalog gives no way to say so yet. A per-preview background control belongs with UIC003, where the page gains controls at all.
 
 ## Notes
 
