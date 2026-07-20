@@ -22,7 +22,8 @@
   ],
   "scripts": {
     "build": "tsup src/cli.ts --format esm",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
   },
   "dependencies": {
     "@thmh/core": "workspace:*"
@@ -30,6 +31,7 @@
   "devDependencies": {
     "@types/node": "^24.0.0",
     "tsup": "^8.5.0",
-    "typescript": "~6.0.3"
+    "typescript": "~6.0.3",
+    "vitest": "^4.1.0"
   }
 }
