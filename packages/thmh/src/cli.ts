@@ -2,11 +2,17 @@
 import fs from "node:fs/promises";
 import path from "node:path";
 import { analyzeProject } from "@thmh/core";
+import { parseBuildArgs } from "./args";
+import { reportWarnings } from "./report";
 
 const USAGE = `Usage: thmh <command> [options]
 
 Commands:
-  build [--root <dir>] [--out <file>]   Analyze the project and write catalog.json
+  build [options]                       Analyze the project and write catalog.json
+    --root <dir>                        Directory to analyze (default: cwd)
+    --out <file>                        File to write (default: <root>/catalog.json)
+    --include <glob>                    Narrow the analyzed set
+    --tsconfig <file>                   TypeScript configuration to analyze under
   dev                                   Not implemented in prototype
   init                                  Not implemented in prototype
   mcp                                   Not implemented in prototype
@@ -38,26 +44,19 @@ async function runBuild(args: string[]): Promise<void> {
     ? path.resolve(options.out)
     : path.join(root, "catalog.json");
 
-  const catalog = await analyzeProject({ root });
+  const catalog = await analyzeProject({
+    root,
+    ...(options.include ? { include: [options.include] } : {}),
+    ...(options.tsconfig
+      ? { tsconfigPath: path.resolve(options.tsconfig) }
+      : {}),
+  });
   await fs.writeFile(out, `${JSON.stringify(catalog, null, 2)}\n`, "utf-8");
+
+  reportWarnings(catalog.warnings, (chunk) => process.stderr.write(chunk));
 
   process.stdout.write(`${catalog.components.length} component(s) analyzed\n`);
   process.stdout.write(`catalog written to ${out}\n`);
-}
-
-function parseBuildArgs(args: string[]): { root?: string; out?: string } {
-  const options: { root?: string; out?: string } = {};
-  for (let i = 0; i < args.length; i += 1) {
-    const arg = args[i];
-    if (arg === "--root") {
-      options.root = args[i + 1];
-      i += 1;
-    } else if (arg === "--out") {
-      options.out = args[i + 1];
-      i += 1;
-    }
-  }
-  return options;
 }
 
 main(process.argv.slice(2)).catch((error: unknown) => {
