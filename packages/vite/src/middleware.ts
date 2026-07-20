@@ -2,6 +2,9 @@ import { readFile } from "node:fs/promises";
 import type { ServerResponse } from "node:http";
 import type { Connect, ViteDevServer } from "vite";
 import type { AnalyzerState } from "./analyzer";
+import { handleMcp } from "./mcp/route";
+import { MCP_PATH } from "./mcp/server";
+import { analyzerSource } from "./mcp/source";
 import { PREVIEW_ENTRY_ID } from "./preview";
 
 const SHELL_HTML = `<!doctype html>
@@ -62,6 +65,9 @@ export function createThmhMiddleware(
         return;
       case "/__thmh/preview":
         void sendPreview(req, res, context.server, next);
+        return;
+      case MCP_PATH:
+        void handleMcp(req, res, analyzerSource(context.analyzer));
         return;
       default:
         next();
