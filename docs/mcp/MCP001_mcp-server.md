@@ -2,7 +2,7 @@
 id: MCP001
 title: MCP server
 depends_on: [MAN001, MAN002, MAN003, INT001]
-used_by: [MCP002]
+used_by: [MCP002, MCP003]
 layer: foundation
 status: draft
 ---
