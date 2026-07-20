@@ -2,7 +2,7 @@
 id: MCP002
 title: search_components
 depends_on: [MCP001, MAN001]
-used_by: []
+used_by: [MCP003]
 layer: feature
 status: draft
 ---

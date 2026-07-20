@@ -108,6 +108,7 @@ A requirement that has been designed carries the feature ID of its design docume
 ### analysis
 
 - Extract component props, types, and JSDoc from TypeScript sources via the type checker. _(Prototype)_ — ANA002
+- Record what a component's props type extends, so a consumer knows the props it accepts are not only the ones listed. _(Beta)_
 - Discover exported PascalCase components with call signatures. _(Prototype)_ — ANA001
 - Analyze cva variant definitions and extract axes, options, defaults, and compound variants. _(Prototype)_ — ANA003
 - Generate the full variant matrix for each component. _(Prototype)_ — ANA004
@@ -131,7 +132,7 @@ A requirement that has been designed carries the feature ID of its design docume
 - Answer with what the source says now, while a dev server is serving: a tool call made after an edit reflects that edit. _(Beta)_ — MCP001
 - `search_components`: return components matching a query, searching more of a component than its name. _(Beta)_ — MCP002
 - Match a query by what a component is for, rather than only by words its source happens to contain. _(GA)_
-- `get_component_detail`: return full metadata for one component. _(Beta)_
+- `get_component_detail`: return full metadata for one component. _(Beta)_ — MCP003
 - Support both Streamable HTTP and stdio transports. _(Beta)_ — MCP001
 - Say what to do next when a tool cannot run in the mode the agent reached, rather than returning nothing or failing silently. _(Beta)_
 - `add_variant`: append a variant override to a `defineCatalog` file. _(GA)_
