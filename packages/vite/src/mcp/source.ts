@@ -32,12 +32,15 @@ export function analysisSource(
 export const CATALOG_PATH = "/__thmh/api/catalog.json";
 export const PROBE_TIMEOUT_MS = 2000;
 
-export function httpSource(address: string): CatalogSource {
+export function httpSource(
+  address: string,
+  timeoutMs: number = PROBE_TIMEOUT_MS,
+): CatalogSource {
   return {
     name: `the dev server at ${address}`,
     load: async () => {
       const response = await fetch(new URL(CATALOG_PATH, address), {
-        signal: AbortSignal.timeout(PROBE_TIMEOUT_MS),
+        signal: AbortSignal.timeout(timeoutMs),
       });
       if (!response.ok) {
         throw new Error(`${address} answered ${response.status}`);
