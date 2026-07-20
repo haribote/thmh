@@ -45,4 +45,4 @@ For each surviving property:
 
 **Truncation is silent in the type text but visible in the output.** A type longer than 200 characters ends in `…`, and there is no field recording that truncation occurred. A consumer cannot distinguish a truncated type from one that genuinely ends in that character.
 
-**Only the first JSDoc block is read**, both for the component and for each prop. A declaration carrying several JSDoc comments contributes only the first.
+**Only the first JSDoc block is read**, both for the component and for each prop. A declaration carrying several JSDoc comments contributes only the first. This is accepted: a declaration written with more than one JSDoc block is rare enough that reading them all would cost more than it returns.
