@@ -48,7 +48,7 @@ The five non-UI domains share four sections:
 - **Overview** — what the feature is, in one or two sentences. A reader who stops here should know whether this document is the one they want.
 - **Requirements** — which requirement this satisfies (see below).
 - **Design** — how it works. The contract, the mechanism, and the constraints that shaped it.
-- **Notes** — edge cases, open questions, and alternatives considered. Rejected alternatives belong here with the reason; otherwise the next contributor reopens the same question.
+- **Notes** — edge cases, open questions, and alternatives considered. Rejected alternatives belong here with the reason; otherwise the next contributor reopens the same question. A shortfall the project has decided to live with closes by saying so, so a reader can tell a settled decision from an open one.
 
 `ui` adds **Anatomy** (structure and parts), **Behavior** (interactions and states), and **A11y** (keyboard focus, semantics, contrast), and narrows **Design** to visual and information hierarchy.
 
