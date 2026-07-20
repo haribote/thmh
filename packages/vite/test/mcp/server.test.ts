@@ -1,6 +1,8 @@
+import { Client } from "@modelcontextprotocol/sdk/client/index.js";
+import { InMemoryTransport } from "@modelcontextprotocol/sdk/inMemory.js";
 import type { Catalog } from "@thmh/core";
 import { describe, expect, it } from "vitest";
-import { createMcpServer, runSearch } from "../../src/mcp/server";
+import { createMcpServer, runDetail, runSearch } from "../../src/mcp/server";
 import type { CatalogSource } from "../../src/mcp/source";
 
 const source: CatalogSource = {
@@ -33,6 +35,69 @@ describe("createMcpServer", () => {
 
     expect(server).toHaveProperty("connect");
     expect(server).toHaveProperty("close");
+  });
+
+  it("offers both tools to a client", async () => {
+    const [clientSide, serverSide] = InMemoryTransport.createLinkedPair();
+    const client = new Client({ name: "test", version: "1" });
+    await Promise.all([
+      createMcpServer(source).connect(serverSide),
+      client.connect(clientSide),
+    ]);
+
+    const { tools } = await client.listTools();
+
+    expect(tools.map((tool) => tool.name).sort()).toEqual([
+      "get_component_detail",
+      "search_components",
+    ]);
+  });
+});
+
+describe("detailTool", () => {
+  it("answers an unknown id with an error", async () => {
+    const answer = await runDetail(source, { id: "src/Nope.tsx#Nope" });
+
+    expect(answer.isError).toBe(true);
+  });
+
+  it("quotes the id and names search_components in that error", async () => {
+    const answer = await runDetail(source, { id: "src/Nope.tsx#Nope" });
+
+    expect(textOf(answer)).toContain("src/Nope.tsx#Nope");
+    expect(textOf(answer)).toContain("search_components");
+  });
+
+  it("includes the catalog's warnings in that error", async () => {
+    const damaged: CatalogSource = {
+      name: "the analyzer in this process",
+      load: async () => ({
+        schemaVersion: 0,
+        generator: "test",
+        generatedAt: "2026-07-20T00:00:00.000Z",
+        components: [],
+        warnings: ["analysis failed: tsconfig is malformed"],
+      }),
+    };
+
+    const answer = await runDetail(damaged, { id: "src/Button.tsx#Button" });
+
+    expect(textOf(answer)).toContain("tsconfig is malformed");
+  });
+
+  it("answers with an error naming the source when it rejects", async () => {
+    const broken: CatalogSource = {
+      name: "analysis of /root",
+      load: async () => {
+        throw new Error("boom");
+      },
+    };
+
+    const answer = await runDetail(broken, { id: "any" });
+
+    expect(answer.isError).toBe(true);
+    expect(textOf(answer)).toContain("analysis of /root");
+    expect(textOf(answer)).toContain("boom");
   });
 });
 
