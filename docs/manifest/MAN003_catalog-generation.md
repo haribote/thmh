@@ -2,7 +2,7 @@
 id: MAN003
 title: Catalog generation
 depends_on: [MAN001, ANA005, INT002]
-used_by: [MAN002, CLI001]
+used_by: [MAN002, CLI001, MCP001]
 layer: integration
 status: stable
 ---

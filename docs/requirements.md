@@ -126,12 +126,12 @@ A requirement that has been designed carries the feature ID of its design docume
 
 ### mcp
 
-- Expose an MCP server wherever the catalog is served, whether that is the host app's dev server or the standalone one. _(Beta)_
-- Reach the catalog from an agent whether or not a dev server is running, so that connecting does not depend on what the developer happens to have open. _(Beta)_
-- Answer with what the source says now, while a dev server is serving: a tool call made after an edit reflects that edit. _(Beta)_
+- Expose an MCP server wherever the catalog is served, whether that is the host app's dev server or the standalone one. _(Beta)_ — MCP001
+- Reach the catalog from an agent whether or not a dev server is running, so that connecting does not depend on what the developer happens to have open. _(Beta)_ — MCP001
+- Answer with what the source says now, while a dev server is serving: a tool call made after an edit reflects that edit. _(Beta)_ — MCP001
 - `search_components`: return components matching a query, matched by intent rather than by exact name. _(Beta)_
 - `get_component_detail`: return full metadata for one component. _(Beta)_
-- Support both Streamable HTTP and stdio transports. _(Beta)_
+- Support both Streamable HTTP and stdio transports. _(Beta)_ — MCP001
 - Say what to do next when a tool cannot run in the mode the agent reached, rather than returning nothing or failing silently. _(Beta)_
 - `add_variant`: append a variant override to a `defineCatalog` file. _(GA)_
 - `render_preview` and `run_interaction_test`: render and verify variants. _(Future)_
