@@ -77,7 +77,7 @@ Errors render inside the frame rather than propagating outward, so one broken co
 
 ## Notes
 
-**The path guard is client-side and is not the security boundary.** It rejects the obvious traversal shapes, but the request is served by the host's dev server, whose own file-serving rules are what actually constrain reachable paths. The guard should be read as a check that produces a good error message, not as the control.
+**The path guard is client-side and is not the security boundary.** It rejects the obvious traversal shapes, but the request is served by the host's dev server, whose own file-serving rules are what actually constrain reachable paths. The guard should be read as a check that produces a good error message, not as the control. That division is accepted: the dev server owns which paths are reachable, and duplicating that rule here would create a second answer to the same question.
 
 **The colon rule blocks more than intended.** Rejecting any path containing a colon rules out protocol-like strings, and also any legitimate path containing one.
 

@@ -49,4 +49,4 @@ When none is found, the project falls back to a fixed set: `strict`, `jsx` as th
 
 **A malformed or missing tsconfig throws.** The error leaves this stage and propagates through [MAN003](../manifest/MAN003_catalog-generation.md), where the dev server converts it into an empty catalog and the CLI exits.
 
-**The stable-API constraint is a promise, not a mechanism.** The requirement is to analyze through the ts-morph API that remains stable across the TypeScript 7 transition. Nothing in this code enforces or checks that; it is honored by what the surrounding code chooses to call.
+**The stable-API constraint is a promise, not a mechanism.** The requirement is to analyze through the ts-morph API that remains stable across the TypeScript 7 transition. Nothing in this code enforces or checks that; it is honored by what the surrounding code chooses to call. This is accepted: a mechanism that could enforce it would have to model which of ts-morph's surface is stable, and that model would go stale faster than the constraint it guards.

@@ -38,7 +38,7 @@ The input is a ts-morph `SourceFile`; the output is a list of extracted calls an
 
 ## Notes
 
-**Only literals are read.** A spread, an identifier reference to a shared object, a template literal with substitutions, or a value computed by a function is unreadable, and warns. This is the deliberate trade: a literal evaluator cannot be wrong about what it reports, where an interpreter could be.
+**Only literals are read.** A spread, an identifier reference to a shared object, a template literal with substitutions, or a value computed by a function is unreadable, and warns. This is the deliberate trade: a literal evaluator cannot be wrong about what it reports, where an interpreter could be. It is accepted rather than scheduled; the warning is the intended outcome, not a gap waiting to be closed.
 
 **Only `class-variance-authority` is recognized.** `tailwind-variants`, `cva` re-exported through a project's own module, and Panda's recipes all go unseen. Supporting them is what the variant adapter interface in ANA006 is for; hard-coding the package name here is the thing that interface removes.
 
