@@ -2,7 +2,7 @@
 id: CLI001
 title: build command
 depends_on: [MAN001, MAN003]
-used_by: []
+used_by: [CLI002, CLI003]
 layer: integration
 status: stable
 ---

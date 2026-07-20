@@ -2,7 +2,7 @@
 id: UIX001
 title: Preview sandbox
 depends_on: []
-used_by: [UIP001, UIC002, INT001]
+used_by: [UIP001, UIC002, INT001, CLI002, CLI003]
 layer: foundation
 status: stable
 ---
