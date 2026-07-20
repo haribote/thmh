@@ -2,7 +2,7 @@
 id: INT001
 title: Vite plugin
 depends_on: [MAN002, UIP001, UIX001]
-used_by: []
+used_by: [CLI002, CLI003]
 layer: integration
 status: stable
 ---

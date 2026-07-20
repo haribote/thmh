@@ -134,8 +134,8 @@ A requirement that has been designed carries the feature ID of its design docume
 ### cli
 
 - `thmh build`: generate a static `catalog.json` for CI and hosted catalogs. _(Prototype)_ — CLI001
-- `thmh init`: wire the plugin and register the MCP endpoint. _(Beta)_
-- `thmh dev`: run a standalone catalog server for repositories with no host app. _(Beta)_
+- `thmh init`: wire the plugin and register the MCP endpoint. _(Beta)_ — CLI002
+- `thmh dev`: run a standalone catalog server for repositories with no host app. _(Beta)_ — CLI003
 - `thmh mcp`: run the MCP server in stdio mode. _(Beta)_
 
 ### integration
