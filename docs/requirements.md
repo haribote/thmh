@@ -10,9 +10,11 @@ thmh is a story-less UI component catalog generator. It statically analyzes comp
 
 ## Background and goals
 
-Storybook has defined component cataloging for a decade, but its model carries structural costs: Story files must be hand-written and kept in sync with the implementation, configuration is duplicated between the app and its Storybook instance, and the catalog is a human-facing UI with little machine readability.
+Storybook has defined component cataloging for a decade, but its model carries structural costs: Story files must be hand-written and kept in sync with the implementation, and configuration is duplicated between the app and its Storybook instance.
 
-That last cost matters more as coding agents help build UI. An agent cannot reliably ask "what components exist, what are their props, what variants are defined?" without a human intermediary, and it cannot tell a real component from a hallucinated one.
+Coding agents make the first of those costs sharper. An agent needs to ask "what components exist, what are their props, what variants are defined?" and get an answer it can trust; without one it cannot tell a real component from a hallucinated one, and it writes a near-duplicate of something the project already has.
+
+Reaching an agent at all is no longer the differentiator. Storybook ships an official MCP addon, with a component-manifest effort under way alongside it — experimental and React-only for now. The question is not whether a catalog speaks to agents but where its answers come from. Storybook's come from hand-written Stories and docgen. What separates thmh is the source: a manifest derived from the components themselves. Overrides exist for what analysis cannot infer, but they are the exception rather than the record, so there is no second copy of a component's truth to fall behind it.
 
 The "two books" concept answers this by deriving both audiences' views from one manifest. 手本 (a model to follow) is what an agent needs: the exact shape of a component, its props and variants, ready to be reproduced. 見本 (a sample to look at) is what a person needs: the component rendered, every variant on screen. Both are generated from `catalog.json`, a machine-readable manifest built by static analysis of component definitions and variant rules.
 
@@ -92,7 +94,7 @@ Exit criteria: adapters for a second framework and a second variant system are c
 - **cva (class-variance-authority)** — A library for declaring variant matrices in TypeScript; thmh's Variant adapter analyzes `cva()` calls to enumerate combinations.
 - **design token** — A named, reusable style value (color, spacing, etc.), typically from Tailwind config or CSS custom properties.
 - **decorator / `defineCatalog`** — An optional override file supplying what static analysis cannot infer: decorators (context providers), mock props, custom variants, and interactions.
-- **MCP server** — A Model Context Protocol server exposing the catalog to agents, over Streamable HTTP when co-located with the dev server, or stdio when standalone.
+- **MCP server** — A Model Context Protocol server exposing the catalog to agents, over Streamable HTTP where a dev server serves it, or stdio where an agent spawns it directly.
 - **MCP tools** — `search_components` (find components), `get_component_detail` (full metadata), and later `render_preview`, `run_interaction_test`, and `add_variant`.
 - **feature document** — A per-feature spec/design at `docs/<domain>/{ID}_slug.md`.
 - **capability domain** — One of `analysis`, `manifest`, `mcp`, `cli`, `integration`, `ui`.
@@ -124,12 +126,17 @@ A requirement that has been designed carries the feature ID of its design docume
 
 ### mcp
 
-- Expose an MCP server co-located with the dev server. _(Beta)_
-- `search_components`: return components matching a query. _(Beta)_
+- Expose an MCP server wherever the catalog is served, whether that is the host app's dev server or the standalone one. _(Beta)_
+- Reach the catalog from an agent whether or not a dev server is running, so that connecting does not depend on what the developer happens to have open. _(Beta)_
+- Answer with what the source says now, while a dev server is serving: a tool call made after an edit reflects that edit. _(Beta)_
+- `search_components`: return components matching a query, matched by intent rather than by exact name. _(Beta)_
 - `get_component_detail`: return full metadata for one component. _(Beta)_
 - Support both Streamable HTTP and stdio transports. _(Beta)_
+- Say what to do next when a tool cannot run in the mode the agent reached, rather than returning nothing or failing silently. _(Beta)_
 - `add_variant`: append a variant override to a `defineCatalog` file. _(GA)_
 - `render_preview` and `run_interaction_test`: render and verify variants. _(Future)_
+- Report a component's accessibility to an agent, so that generated UI can be reviewed without a person in the loop. _(Future)_
+- Produce, for a published catalog, an MCP that is a read-only subset of the local one: the query tools and prebuilt previews, without the tools that write or execute. Deploying it stays the user's responsibility. _(Future)_
 
 ### cli
 
@@ -172,7 +179,8 @@ A requirement that has been designed carries the feature ID of its design docume
 - **Vite-plugin-first distribution.** The primary entry point is a Vite plugin that inherits the host app's configuration; a standalone CLI is the fallback for repositories with no Vite host — design-system libraries, and React meta-frameworks such as Next.js that use their own build system (targeted for GA).
 - **cva + Tailwind near-term.** The near-term style stack is cva for variants and Tailwind for tokens; other systems come via adapters later.
 - **Node.js 24+** across all packages.
-- **Agent-agnostic.** No capability is tied to a single coding agent; agent-facing guidance lives in `AGENTS.md` and public docs.
+- **Agent-agnostic.** No capability is tied to a single coding agent; agent-facing guidance lives in `AGENTS.md` and public docs. Registering the server with an agent is itself a capability, so no one agent's configuration is the assumed target.
+- **Tool names are chosen for switching cost.** An agent that already knows another catalog's MCP should recognize what these tools do, so the vocabulary follows established naming rather than inventing its own.
 
 ## Open questions
 
@@ -182,6 +190,9 @@ A requirement that has been designed carries the feature ID of its design docume
 - How deep should the Tailwind token dependency graph go before the added depth stops paying off?
 - What is the scope of shadcn `registry.json` interop — ingesting shadcn components, emitting thmh manifests, or both — and how do the two schemas evolve if they diverge?
 - How should Next.js React Server Components be previewed, if at all — is client-only preview sufficient, or is an RSC-capable renderer needed, and in which phase?
+- If Storybook publishes its component-manifest specification, should thmh convert between the two, as it plans to for shadcn's `registry.json`?
+- How should a registered MCP endpoint survive a change to the host app's dev port — by requiring a fixed `server.port`, by detecting and rewriting the registration, or by serving from a stable address of its own?
+- Is a published catalog's MCP permanently read-only, or do the writing and executing tools eventually reach it?
 
 ## References
 
