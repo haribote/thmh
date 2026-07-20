@@ -71,7 +71,7 @@ In the document's Requirements section, link to the section of [requirements.md]
 In `requirements.md`, append the feature ID to that bullet:
 
 ```markdown
-- Expose an MCP server co-located with the dev server _(Beta)_ — MCP001
+- Expose an MCP server wherever the catalog is served _(Beta)_ — MCP001
 - `add_variant`: append a variant override to a `defineCatalog` file _(GA)_
 ```
 
